@@ -1,0 +1,55 @@
+{
+    "cardInfo": [
+        {
+            "id": 1,
+            "name": "LOL",
+            "ability": "參與世界大賽的門票"
+        },
+        {
+            "id": 2,
+            "name": "SKT",
+            "ability": "暫無效果"
+        },
+        {
+            "id": 3,
+            "name": "GRF",
+            "ability": "暫無效果"
+        },
+        {
+            "id": 4,
+            "name": "DWG",
+            "ability": "暫無效果"
+        },
+        {
+            "id": 5,
+            "name": "FPX",
+            "ability": "暫無效果"
+        },
+        {
+            "id": 6,
+            "name": "IG",
+            "ability": "暫無效果"
+        },
+        {
+            "id": 7,
+            "name": "G2",
+            "ability": "暫無效果"
+        },
+        {
+            "id": 8,
+            "name": "FNC",
+            "ability": "暫無效果"
+        },
+        {
+            "id": 9,
+            "name": "HKA",
+            "ability": "暫無效果"
+        },
+        {
+            "id": 10,
+            "name": "AHQ",
+            "ability": "暫無效果"
+        }
+    ],
+    "total": 10
+}

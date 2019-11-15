@@ -1,0 +1,14 @@
+{
+    "name": "santa-claus-bot",
+    "description": "Discord bot hosting on cloud for santa-claus project",
+    "version": "1.0.0",
+    "main": "bot.js",
+    "scripts": {
+        "start": "node bot.js"
+    },
+    "dependencies": {
+        "discord.js": "^11.1.0",
+        "dotenv": "^8.2.0",
+        "fs": "0.0.1-security"
+    }
+}
