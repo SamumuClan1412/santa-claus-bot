@@ -1,6 +1,6 @@
-const Discord = require('discord.js');
+var Discord = require('discord.js');
 const { prefix } = require('./config.json');
-const fs = require('fs');
+var fs = require('fs');
 require('dotenv').config();
 
 const Client = new Discord.Client();
@@ -37,6 +37,15 @@ Client.on('message', message => {
     console.log(message.content);
     inputUserID(message.author.username, message.author.id)
 });
+//$help
+Client.on('message', message => {
+    if (message.content.startsWith(`${prefix}help`)) {
+        message.channel.send('命令列表\n$checkin：每日登入領取 200 點' +
+            '\n$info：查看個人資訊\n$card：查看卡片資訊\n$slot：花費 100 點數抽獎\n$rank：查看積分排行榜'
+            + '\n$exchange 100：兌換 100 點數為 10 積分\n$code xxx：輸入序號兌換積分\n$sell hello：販賣已擁有卡片 hello'
+            + '\n$bid hello 100：參加拍賣會，對 hello 出價 100 點數，時限內價高者得');
+    }
+})
 
 //>checkin
 Client.on('message', message => {
@@ -139,12 +148,20 @@ Client.on('message', message => {
     if (message.content.startsWith(`${prefix}rank`)) {
 
         var rankArray = [];
+        var rankDisplay = [];
         message.channel.send('積分排行榜')
         rankArray = rankErc(rankArray);
+        for (var i = 1; i <= rankArray[1].length; i++) {
+            rankDisplay.push('第 ' + i + ' 名： ' + rankArray[1][rankArray[1].length - i] +
+                ' 共 ' + rankArray[0][rankArray[0].length - i] + ' 分\n');
+        }
+        message.channel.send(rankDisplay);
+        /*
         message.channel.send('第一名：' + rankArray[1][rankArray[1].length - 1] +
             ' 共 ' + rankArray[0][rankArray[0].length - 1] +
             ' 分\n第二名：' + rankArray[1][rankArray[1].length - 2] +
             ' 共 ' + rankArray[0][rankArray[0].length - 2] + ' 分');
+        */
     }
 })
 //>exchange
@@ -154,14 +171,14 @@ Client.on('message', message => {
         var point;
         _, point = message.content.split(' ', 2)
         var exchangePoints = parseInt(point[1], 10);
-        var exchangeErc = exchangePoints * 0.1;
+        var exchangeErc = parseFloat((exchangePoints * 0.1).toFixed(1));
 
         for (var i = 0; i < Client.userJSON[userInfo].length; i++) {
             if (message.author.id == Client.userJSON[userInfo][i].userID) {
                 if (Client.userJSON[userInfo][i].points - exchangePoints > 0) {
                     Client.userJSON[userInfo][i].points -= exchangePoints;
                     Client.userJSON[userInfo][i].erc += exchangeErc;
-                    writeJSON(bot.userJSON);
+                    writeJSON(Client.userJSON);
                     message.channel.send('花費 ' + exchangePoints + ' 點數兌換 ' + exchangeErc + ' 積分!');
                 } else {
                     message.channel.send('點數不足無法兌換！')
@@ -237,7 +254,7 @@ Client.on('message', message => {
 Main Function
 */
 
-function DisplayRules() {
+function DisplayRules(helpDisplay) {
     //if someone new enter the server display rules on channels
 }
 
@@ -345,9 +362,11 @@ function rankErc(rankArray) {
         for (var j = 0; j < Client.userJSON[userInfo].length; j++) {
             if (ercArray[i] == Client.userJSON[userInfo][j].erc) {
                 nameArray.push(Client.userJSON[userInfo][j].username);
+                break;
             }
         }
     }
+    console.log(nameArray);
     for (var i = 0; i < 2; i++) {
         rankArray[i] = [];
         for (var j = 0; j < ercArray.length; j++) {
@@ -358,6 +377,7 @@ function rankErc(rankArray) {
             }
         }
     }
+    console.log(rankArray);
     return rankArray;
 }
 
