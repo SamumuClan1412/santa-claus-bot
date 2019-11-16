@@ -3,19 +3,24 @@ const { prefix } = require('./config.json');
 const fs = require('fs');
 require('dotenv').config();
 
-const bot = new Discord.Client();
+const Client = new Discord.Client();
 
-bot.userJSON = require('./user.json');
-bot.cardJSON = require('./card.json');
-bot.codeJSON = require('./code.json');
-bot.on('ready', () => {
-    console.log(`Logged in as ${bot.user.tag}!`);
+Client.userJSON = require('./user.json');
+Client.cardJSON = require('./card.json');
+Client.codeJSON = require('./code.json');
+Client.on('ready', () => {
+    console.log(`Logged in as ${Client.user.tag}!`);
 
-    bot.user.setGame("SamumuBot!");
+    Client.user.setGame("SamumuBot!");
 });
 
-bot.once('ready', () => {
+Client.once('ready', () => {
     console.log('Ready!');
+});
+
+process.on('unhandledRejection', error => {
+    console.error('unhandledRejection', error);
+    process.exit(1) // To exit with a 'failure' code
 });
 
 //============================================================================================================================
@@ -28,44 +33,27 @@ const slotPlointConsume = -100;
 
 //write user id to userinfo.json
 //display every message
-bot.on('message', message => {
+Client.on('message', message => {
     console.log(message.content);
     inputUserID(message.author.username, message.author.id)
-
-    if (message.content.startsWith(`${prefix}write`)) {
-        editedMessage = message.content.slice(6);
-
-        bot.msgsJSON[message.author.username] = {
-            message: editedMessage
-        }
-        fs.writeFile("./msgs.json", JSON.stringify(bot.msgsJSON, null, 4), err => {
-            if (err) throw err;
-            message.channel.send("message written");
-        })
-    }
-
-    if (message.content.startsWith(`${prefix}get`)) {
-        let _message = bot.msgsJSON[message.author.username].message;
-        message.channel.send("message is :" + _message);
-    }
 });
 
 //>checkin
-bot.on('message', message => {
+Client.on('message', message => {
     if (message.content.startsWith(`${prefix}checkin`)) {
         var checkinPoints = 200;
         //console.log(bot.userJSON[userInfo][0].userID)
-        for (var i = 0; i < bot.userJSON[userInfo].length; i++) {
-            if (message.author.id == bot.userJSON[userInfo][i].userID) {
-                if (bot.userJSON[userInfo][i].checkin == "off") {
+        for (var i = 0; i < Client.userJSON[userInfo].length; i++) {
+            if (message.author.id == Client.userJSON[userInfo][i].userID) {
+                if (Client.userJSON[userInfo][i].checkin == "off") {
                     //checkinJSON(message.author.id);
-                    bot.userJSON[userInfo][i].checkin = "on";
-                    writeJSON(bot.userJSON);
-                    bot.userJSON[userInfo][i].points = bot.userJSON[userInfo][i].points + checkinPoints;
+                    Client.userJSON[userInfo][i].checkin = "on";
+                    writeJSON(Client.userJSON);
+                    Client.userJSON[userInfo][i].points = Client.userJSON[userInfo][i].points + checkinPoints;
                     //changePoints(message.author.id, checkinPoints);
                     message.channel.send('恭喜 ' + message.author.username + '獲得 ' + checkinPoints +
-                        ' 點數！\n目前共有：' + bot.userJSON[userInfo][i].points + '點數');
-                } else if (bot.userJSON[userInfo][i].checkin == "on") {
+                        ' 點數！\n目前共有：' + Client.userJSON[userInfo][i].points + '點數');
+                } else if (Client.userJSON[userInfo][i].checkin == "on") {
                     message.channel.send(message.author.username + "今天已經完成 Checkin！:eyes:");
                 }
             }
@@ -75,33 +63,33 @@ bot.on('message', message => {
 
 
 //>info
-bot.on('message', message => {
+Client.on('message', message => {
     if (message.content.startsWith(`${prefix}info`)) {
 
         index = changeUserIDToIndex(message.author.id, index);
 
         message.channel.send(message.author.username + ' 資訊\nID：'
             + message.author.id + '\n點數：'
-            + bot.userJSON[userInfo][index].points + ' 點\n積分：'
-            + bot.userJSON[userInfo][index].erc + ' 分\n');
+            + Client.userJSON[userInfo][index].points + ' 點\n積分：'
+            + Client.userJSON[userInfo][index].erc + ' 分\n');
 
     }
 })
 //>card
-bot.on('message', message => {
+Client.on('message', message => {
     if (message.content.startsWith(`${prefix}card`)) {
 
         var cardInfoArray = [];
         var noCardInfoArray = [];
 
-        for (var index = 0; index < bot.userJSON[userInfo].length; index++) {
-            if (message.author.id == bot.userJSON[userInfo][index].userID) {
-                for (var i = 0; i < bot.userJSON[userInfo][index].userCard.length; i++) {
-                    if (bot.userJSON[userInfo][index].userCard[i].cardStatus == "on") {
-                        cardInfoArray.push(bot.cardJSON[cardInfo][i].name + '\n卡片效果：' + bot.cardJSON[cardInfo][i].ability + '\n');
+        for (var index = 0; index < Client.userJSON[userInfo].length; index++) {
+            if (message.author.id == Client.userJSON[userInfo][index].userID) {
+                for (var i = 0; i < Client.userJSON[userInfo][index].userCard.length; i++) {
+                    if (Client.userJSON[userInfo][index].userCard[i].cardStatus == "on") {
+                        cardInfoArray.push(Client.cardJSON[cardInfo][i].name + '\n卡片效果：' + Client.cardJSON[cardInfo][i].ability + '\n');
                         console.log(cardInfoArray);
-                    } else if (bot.userJSON[userInfo][index].userCard[i].cardStatus == "off") {
-                        noCardInfoArray.push(bot.cardJSON[cardInfo][i].name + '\n卡片效果：' + bot.cardJSON[cardInfo][i].ability + '\n');
+                    } else if (Client.userJSON[userInfo][index].userCard[i].cardStatus == "off") {
+                        noCardInfoArray.push(Client.cardJSON[cardInfo][i].name + '\n卡片效果：' + Client.cardJSON[cardInfo][i].ability + '\n');
                         console.log(noCardInfoArray);
                     }
                 }
@@ -125,16 +113,16 @@ bot.on('message', message => {
     }
 })
 //>slot
-bot.on('message', message => {
+Client.on('message', message => {
     if (message.content.startsWith(`${prefix}slot`)) {
         var slotPrize;
         message.channel.send('開始抽獎')
         message.channel.send('.');
 
         //index = changeUserIDToIndex(message.author.id, index);
-        for (var index = 0; index < bot.userJSON[userInfo].length; index++) {
-            if (message.author.id == bot.userJSON[userInfo][index].userID) {
-                if (bot.userJSON.userInfo[index].points + slotPlointConsume < 0) {
+        for (var index = 0; index < Client.userJSON[userInfo].length; index++) {
+            if (message.author.id == Client.userJSON[userInfo][index].userID) {
+                if (Client.userJSON.userInfo[index].points + slotPlointConsume < 0) {
                     message.channel.send('點數不足無法抽獎！')
                 } else {
                     setTimeout(writeJSON, 3000);
@@ -147,7 +135,7 @@ bot.on('message', message => {
     }
 })
 //>rank
-bot.on('message', message => {
+Client.on('message', message => {
     if (message.content.startsWith(`${prefix}rank`)) {
 
         var rankArray = [];
@@ -160,7 +148,7 @@ bot.on('message', message => {
     }
 })
 //>exchange
-bot.on('message', message => {
+Client.on('message', message => {
     if (message.content.startsWith(`${prefix}exchange`)) {
         var _;
         var point;
@@ -168,11 +156,11 @@ bot.on('message', message => {
         var exchangePoints = parseInt(point[1], 10);
         var exchangeErc = exchangePoints * 0.1;
 
-        for (var i = 0; i < bot.userJSON[userInfo].length; i++) {
-            if (message.author.id == bot.userJSON[userInfo][i].userID) {
-                if (bot.userJSON[userInfo][i].points - exchangePoints > 0) {
-                    bot.userJSON[userInfo][i].points -= exchangePoints;
-                    bot.userJSON[userInfo][i].erc += exchangeErc;
+        for (var i = 0; i < Client.userJSON[userInfo].length; i++) {
+            if (message.author.id == Client.userJSON[userInfo][i].userID) {
+                if (Client.userJSON[userInfo][i].points - exchangePoints > 0) {
+                    Client.userJSON[userInfo][i].points -= exchangePoints;
+                    Client.userJSON[userInfo][i].erc += exchangeErc;
                     writeJSON(bot.userJSON);
                     message.channel.send('花費 ' + exchangePoints + ' 點數兌換 ' + exchangeErc + ' 積分!');
                 } else {
@@ -186,7 +174,7 @@ bot.on('message', message => {
 })
 
 //>code
-bot.on('message', message => {
+Client.on('message', message => {
     if (message.content.startsWith(`${prefix}code`)) {
         var _;
         var getErcCode;
@@ -201,7 +189,7 @@ bot.on('message', message => {
 })
 
 //>sell
-bot.on('message', message => {
+Client.on('message', message => {
     if (message.content.startsWith(`${prefix}sell`)) {
         var _;
         var getSellCard;
@@ -222,7 +210,7 @@ bot.on('message', message => {
 })
 
 //>bid
-bot.on('message', message => {
+Client.on('message', message => {
     if (message.content.startsWith(`${prefix}bid`)) {
         var _;
         var getBidCard;
@@ -262,12 +250,17 @@ function writeJSON(json) {
 
 function inputUserID(userName, id) {
 
-    for (var i = 0; i < bot.userJSON[userInfo].length; i++) {
-        if (userName == bot.userJSON[userInfo][i].username) {
-            bot.userJSON[userInfo][i].userID = parseInt(id);
+    for (var i = 0; i < Client.userJSON[userInfo].length; i++) {
+        if (userName == Client.userJSON[userInfo][i].username) {
+            Client.userJSON[userInfo][i].userID = parseInt(id);
+            console.log("Parse userID");
+        } else if (userName == "test") {
+            Client.userJSON[userInfo][i].username = userName;
+            Client.userJSON[userInfo][i].userID = parseInt(id);
+            break;
         }
     }
-    writeJSON(bot.userJSON);
+    writeJSON(Client.userJSON);
 }
 
 
@@ -330,8 +323,8 @@ function changeErc(id, erc) {
 */
 
 function changeUserIDToIndex(id, index) {
-    for (var i = 0; i < bot.userJSON[userInfo].length; i++) {
-        if (id == bot.userJSON[userInfo][i].userID) {
+    for (var i = 0; i < Client.userJSON[userInfo].length; i++) {
+        if (id == Client.userJSON[userInfo][i].userID) {
             index = i;
         }
     }
@@ -343,15 +336,15 @@ function changeUserIDToIndex(id, index) {
 function rankErc(rankArray) {
     var ercArray = [];
     var nameArray = [];
-    for (var i = 0; i < bot.userJSON[userInfo].length; i++) {
-        ercArray.push(userJSON.userInfo[i].erc);
+    for (var i = 0; i < Client.userJSON[userInfo].length; i++) {
+        ercArray.push(Client.userJSON[userInfo][i].erc);
     }
     ercArray = bubbleSort(ercArray);
 
     for (var i = 0; i < ercArray.length; i++) {
-        for (var j = 0; j < bot.userJSON[userInfo].length; j++) {
-            if (ercArray[i] == bot.userJSON[userInfo][j].erc) {
-                nameArray.push(bot.userJSON[userInfo][j].username);
+        for (var j = 0; j < Client.userJSON[userInfo].length; j++) {
+            if (ercArray[i] == Client.userJSON[userInfo][j].erc) {
+                nameArray.push(Client.userJSON[userInfo][j].username);
             }
         }
     }
@@ -372,18 +365,18 @@ function slot(id, slotPrize) {
     var slotPoint = GetRandomNum(1, 200);
     var slotCard = GetRandomNum(1, 10);
     var random = GetRandomNum(0, 1);
-    for (var index = 0; index < bot.userJSON[userInfo].length; index++) {
-        if (id == bot.userJSON[userInfo][index].userID) {
+    for (var index = 0; index < Client.userJSON[userInfo].length; index++) {
+        if (id == Client.userJSON[userInfo][index].userID) {
             if (random == 0) {
-                bot.userJSON[userInfo][index].points = bot.userJSON[userInfo][index].points + slotPoint + slotPlointConsume;
+                Client.userJSON[userInfo][index].points = Client.userJSON[userInfo][index].points + slotPoint + slotPlointConsume;
                 slotPrize = '恭喜獲得' + slotPoint + ' 點！';
             } else if (random == 1) {
                 slotPrize = '恭喜獲得' + slotCard + ' 號卡片！';
                 var cardIndex = slotCard - 1;
-                bot.userJSON[userInfo][index].userCard[cardIndex].cardStatus = "on";
+                Client.userJSON[userInfo][index].userCard[cardIndex].cardStatus = "on";
             }
-            console.log(bot.userJSON[userInfo][index].userCard)
-            writeJSON(bot.userJSON);
+            console.log(Client.userJSON[userInfo][index].userCard)
+            writeJSON(Client.userJSON);
         }
     }
     return slotPrize;
@@ -393,21 +386,21 @@ function slot(id, slotPrize) {
 function getErcFromPrivateKey(id, code, result) {
 
     var getErc;
-    for (var i = 0; i < bot.codeJSON[codeInfo].length; i++) {
-        if (code == bot.codeJSON[codeInfo][i].privateKey) {
-            if (bot.codeJSON[codeInfo][i].status == "on") {
-                getErc = bot.codeJSON[codeInfo][i].erc;
-                bot.codeJSON[codeInfo][i].status = "off";
+    for (var i = 0; i < Client.codeJSON[codeInfo].length; i++) {
+        if (code == Client.codeJSON[codeInfo][i].privateKey) {
+            if (Client.codeJSON[codeInfo][i].status == "on") {
+                getErc = Client.codeJSON[codeInfo][i].erc;
+                Client.codeJSON[codeInfo][i].status = "off";
                 writeJSON(bot.codeJSON);
-                for (var j = 0; j < bot.userJSON[userInfo].length; j++) {
-                    if (id == bot.userJSON[userInfo][j].userID) {
-                        bot.userJSON[userInfo][j].erc += getErc
-                        writeJSON(bot.userJSON);
+                for (var j = 0; j < Client.userJSON[userInfo].length; j++) {
+                    if (id == Client.userJSON[userInfo][j].userID) {
+                        Client.userJSON[userInfo][j].erc += getErc
+                        writeJSON(Client.userJSON);
                     }
                 }
                 result = "積分兌換成功！！\n恭喜獲得 " + getErc + " 積分";
 
-            } else if (bot.codeJSON[codeInfo][i].status == "off") {
+            } else if (Client.codeJSON[codeInfo][i].status == "off") {
                 result = "序號已經被兌換！！\n若有問題，請聯繫客服！";
             }
         }
@@ -428,16 +421,16 @@ function changeCard(id, cardsIndex) {
 */
 
 function getSellCardIndex(cardName) {
-    for (var i = 0; i < bot.cardJSON[cardInfo].length; i++) {
-        if (cardName == bot.cardJSON[cardInfo][i].name) {
+    for (var i = 0; i < Client.cardJSON[cardInfo].length; i++) {
+        if (cardName == Client.cardJSON[cardInfo][i].name) {
             return i;
         }
     }
 }
 function canSell(id, cardIndex) {
-    for (var i = 0; i < bot.userJSON[userInfo].length; i++) {
-        if (id == bot.userJSON[userInfo][i].userID) {
-            if (bot.userJSON[userInfo][i].userCard[cardIndex].cardStatus == "on") {
+    for (var i = 0; i < Client.userJSON[userInfo].length; i++) {
+        if (id == Client.userJSON[userInfo][i].userID) {
+            if (Client.userJSON[userInfo][i].userCard[cardIndex].cardStatus == "on") {
                 return true;
             } else {
                 return false;
@@ -446,18 +439,18 @@ function canSell(id, cardIndex) {
     }
 }
 function changeSelling(id, cardIndex) {
-    for (var i = 0; i < bot.userJSON[userInfo].length; i++) {
-        if (id == bot.userJSON[userInfo][i].userID) {
-            bot.userJSON[userInfo][i].userCard[cardIndex].selling = "on";
+    for (var i = 0; i < Client.userJSON[userInfo].length; i++) {
+        if (id == Client.userJSON[userInfo][i].userID) {
+            Client.userJSON[userInfo][i].userCard[cardIndex].selling = "on";
         }
     }
-    writeJSON(bot.userJSON);
+    writeJSON(Client.userJSON);
 }
 
 function canBid(id, cardIndex) {
-    for (var i = 0; i < bot.userJSON[userInfo].length; i++) {
-        if (id == bot.userJSON[userInfo][i].userID) {
-            if (bot.userJSON[userInfo][i].userCard[cardIndex].selling == "on") {
+    for (var i = 0; i < Client.userJSON[userInfo].length; i++) {
+        if (id == Client.userJSON[userInfo][i].userID) {
+            if (Client.userJSON[userInfo][i].userCard[cardIndex].selling == "on") {
                 return true;
             } else {
                 return false;
@@ -492,4 +485,4 @@ function bubbleSort(array) {
     }
     return array;
 }
-bot.login(process.env.BOT_TOKEN);//BOT_TOKEN is the Client Secret
+Client.login(process.env.BOT_TOKEN);//BOT_TOKEN is the Client Secret
