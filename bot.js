@@ -152,8 +152,10 @@ Client.on('message', message => {
         message.channel.send('積分排行榜')
         rankArray = rankErc(rankArray);
         for (var i = 1; i <= rankArray[1].length; i++) {
-            rankDisplay.push('第 ' + i + ' 名： ' + rankArray[1][rankArray[1].length - i] +
-                ' 共 ' + rankArray[0][rankArray[0].length - i] + ' 分\n');
+            if (rankArray[1][rankArray[1].length - i] != "test") {
+                rankDisplay.push('第 ' + i + ' 名： ' + rankArray[1][rankArray[1].length - i] +
+                    ' 共 ' + rankArray[0][rankArray[0].length - i] + ' 分\n');
+            }
         }
         message.channel.send(rankDisplay);
         /*
@@ -393,6 +395,7 @@ function slot(id, slotPrize) {
             } else if (random == 1) {
                 slotPrize = '恭喜獲得' + slotCard + ' 號卡片！';
                 var cardIndex = slotCard - 1;
+                Client.userJSON[userInfo][index].points = Client.userJSON[userInfo][index].points + slotPlointConsume;
                 Client.userJSON[userInfo][index].userCard[cardIndex].cardStatus = "on";
             }
             console.log(Client.userJSON[userInfo][index].userCard)
