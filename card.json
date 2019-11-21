@@ -2,54 +2,53 @@
     "cardInfo": [
         {
             "id": 1,
-            "name": "LOL",
-            "ability": "參與世界大賽的門票"
+            "name": "妙蛙種子",
+            "ability": "藤鞭"
         },
         {
             "id": 2,
-            "name": "SKT",
-            "ability": "暫無效果"
+            "name": "小火龍",
+            "ability": "火焰拳"
         },
         {
             "id": 3,
-            "name": "GRF",
-            "ability": "暫無效果"
+            "name": "傑尼龜",
+            "ability": "水炮"
         },
         {
             "id": 4,
-            "name": "DWG",
-            "ability": "暫無效果"
+            "name": "皮卡丘",
+            "ability": "雷電拳"
         },
         {
             "id": 5,
-            "name": "FPX",
-            "ability": "暫無效果"
+            "name": "波波",
+            "ability": "翅膀攻擊"
         },
         {
             "id": 6,
-            "name": "IG",
-            "ability": "暫無效果"
+            "name": "喵喵",
+            "ability": "居合斬"
         },
         {
             "id": 7,
-            "name": "G2",
-            "ability": "暫無效果"
+            "name": "腕力",
+            "ability": "拍擊"
         },
         {
             "id": 8,
-            "name": "FNC",
-            "ability": "暫無效果"
+            "name": "小拳石",
+            "ability": "連續拳"
         },
         {
             "id": 9,
-            "name": "HKA",
-            "ability": "暫無效果"
+            "name": "卡拉卡拉",
+            "ability": "劍舞"
         },
         {
             "id": 10,
-            "name": "AHQ",
-            "ability": "暫無效果"
+            "name": "伊布",
+            "ability": "角撞"
         }
-    ],
-    "total": 10
+    ]
 }

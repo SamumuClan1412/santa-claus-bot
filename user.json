@@ -3,107 +3,97 @@
         {
             "userID": 519777074198609900,
             "username": "Roger",
-            "points": 1056,
-            "erc": 900,
+            "points": 300,
+            "erc": 0,
             "userCard": [
                 {
-                    "cardID": 1,
                     "cardStatus": "on",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 2,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 3,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 4,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 5,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 6,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 7,
-                    "cardStatus": "on",
-                    "selling": "off"
-                },
-                {
-                    "cardID": 8,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 9,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 10,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
                 }
             ],
-            "checkin": "on"
+            "checkin": "off"
         },
         {
             "userID": 517231125257519100,
             "username": "evilion41",
-            "points": 600,
-            "erc": 300,
+            "points": 0,
+            "erc": 0,
             "userCard": [
                 {
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 }
             ],
             "checkin": "off"
@@ -115,54 +105,44 @@
             "erc": 0,
             "userCard": [
                 {
-                    "cardID": 1,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 2,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 3,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 4,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 5,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 6,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 7,
-                    "cardStatus": "on",
-                    "selling": "off"
+                    "cardStatus": "off",
+                    "selling": "false"
                 },
                 {
-                    "cardID": 8,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 9,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 10,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 }
             ],
             "checkin": "off"
@@ -174,54 +154,44 @@
             "erc": 0,
             "userCard": [
                 {
-                    "cardID": 1,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 2,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 3,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 4,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 5,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 6,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 7,
-                    "cardStatus": "on",
-                    "selling": "off"
+                    "cardStatus": "off",
+                    "selling": "false"
                 },
                 {
-                    "cardID": 8,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 9,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 10,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 }
             ],
             "checkin": "off"
@@ -233,54 +203,44 @@
             "erc": 0,
             "userCard": [
                 {
-                    "cardID": 1,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 2,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 3,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 4,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 5,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 6,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 7,
-                    "cardStatus": "on",
-                    "selling": "off"
+                    "cardStatus": "off",
+                    "selling": "false"
                 },
                 {
-                    "cardID": 8,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 9,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 10,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 }
             ],
             "checkin": "off"
@@ -292,54 +252,44 @@
             "erc": 0,
             "userCard": [
                 {
-                    "cardID": 1,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 2,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 3,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 4,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 5,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 6,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 7,
-                    "cardStatus": "on",
-                    "selling": "off"
+                    "cardStatus": "off",
+                    "selling": "false"
                 },
                 {
-                    "cardID": 8,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 9,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 10,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 }
             ],
             "checkin": "off"
@@ -351,54 +301,44 @@
             "erc": 0,
             "userCard": [
                 {
-                    "cardID": 1,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 2,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 3,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 4,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 5,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 6,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 7,
-                    "cardStatus": "on",
-                    "selling": "off"
+                    "cardStatus": "off",
+                    "selling": "false"
                 },
                 {
-                    "cardID": 8,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 9,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 10,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 }
             ],
             "checkin": "off"
@@ -410,54 +350,44 @@
             "erc": 0,
             "userCard": [
                 {
-                    "cardID": 1,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 2,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 3,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 4,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 5,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 6,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 7,
-                    "cardStatus": "on",
-                    "selling": "off"
+                    "cardStatus": "off",
+                    "selling": "false"
                 },
                 {
-                    "cardID": 8,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 9,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 10,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 }
             ],
             "checkin": "off"
@@ -469,54 +399,44 @@
             "erc": 0,
             "userCard": [
                 {
-                    "cardID": 1,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 2,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 3,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 4,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 5,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 6,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 7,
-                    "cardStatus": "on",
-                    "selling": "off"
+                    "cardStatus": "off",
+                    "selling": "false"
                 },
                 {
-                    "cardID": 8,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 9,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 10,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 }
             ],
             "checkin": "off"
@@ -528,54 +448,289 @@
             "erc": 0,
             "userCard": [
                 {
-                    "cardID": 1,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 2,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 3,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 4,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 5,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 6,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 7,
-                    "cardStatus": "on",
-                    "selling": "off"
+                    "cardStatus": "off",
+                    "selling": "false"
                 },
                 {
-                    "cardID": 8,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 9,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
                 },
                 {
-                    "cardID": 10,
                     "cardStatus": "off",
-                    "selling": "off"
+                    "selling": "false"
+                }
+            ],
+            "checkin": "off"
+        },
+        {
+            "userID": 0,
+            "username": "test",
+            "points": 0,
+            "erc": 0,
+            "userCard": [
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                }
+            ],
+            "checkin": "off"
+        },
+        {
+            "userID": 0,
+            "username": "test",
+            "points": 0,
+            "erc": 0,
+            "userCard": [
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                }
+            ],
+            "checkin": "off"
+        },
+        {
+            "userID": 0,
+            "username": "test",
+            "points": 0,
+            "erc": 0,
+            "userCard": [
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                }
+            ],
+            "checkin": "off"
+        },
+        {
+            "userID": 0,
+            "username": "test",
+            "points": 0,
+            "erc": 0,
+            "userCard": [
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                }
+            ],
+            "checkin": "off"
+        },
+        {
+            "userID": 0,
+            "username": "test",
+            "points": 0,
+            "erc": 0,
+            "userCard": [
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
                 }
             ],
             "checkin": "off"

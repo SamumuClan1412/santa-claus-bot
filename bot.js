@@ -1,6 +1,7 @@
 var Discord = require('discord.js');
 const { prefix } = require('./config.json');
 var fs = require('fs');
+var cron = require('cron');
 require('dotenv').config();
 
 const Client = new Discord.Client();
@@ -8,6 +9,8 @@ const Client = new Discord.Client();
 Client.userJSON = require('./user.json');
 Client.cardJSON = require('./card.json');
 Client.codeJSON = require('./code.json');
+Client.auctionJSON = require('./auction.json');
+
 Client.on('ready', () => {
     console.log(`Logged in as ${Client.user.tag}!`);
 
@@ -23,12 +26,15 @@ process.on('unhandledRejection', error => {
     process.exit(1) // To exit with a 'failure' code
 });
 
+
+
 //============================================================================================================================
 //bot command
 var index;
 const userInfo = "userInfo";
 const cardInfo = "cardInfo";
 const codeInfo = "codeInfo";
+const auctionInfo = "auctionInfo";
 const slotPlointConsume = -100;
 
 //write user id to userinfo.json
@@ -47,7 +53,11 @@ Client.on('message', message => {
     }
 })
 
-//>checkin
+//$checkin
+//checkin reset at 9 am everyday
+let checkinResetCron = new cron.CronJob('00 40 14 * * *', checkinReset);
+checkinResetCron.start();
+
 Client.on('message', message => {
     if (message.content.startsWith(`${prefix}checkin`)) {
         var checkinPoints = 200;
@@ -63,7 +73,7 @@ Client.on('message', message => {
                     message.channel.send('恭喜 ' + message.author.username + '獲得 ' + checkinPoints +
                         ' 點數！\n目前共有：' + Client.userJSON[userInfo][i].points + '點數');
                 } else if (Client.userJSON[userInfo][i].checkin == "on") {
-                    message.channel.send(message.author.username + "今天已經完成 Checkin！:eyes:");
+                    message.channel.send(message.author.username + "今天已經完成 Checkin！:eyes:\n每早 9 點重置");
                 }
             }
         }
@@ -95,10 +105,10 @@ Client.on('message', message => {
             if (message.author.id == Client.userJSON[userInfo][index].userID) {
                 for (var i = 0; i < Client.userJSON[userInfo][index].userCard.length; i++) {
                     if (Client.userJSON[userInfo][index].userCard[i].cardStatus == "on") {
-                        cardInfoArray.push(Client.cardJSON[cardInfo][i].name + '\n卡片效果：' + Client.cardJSON[cardInfo][i].ability + '\n');
+                        cardInfoArray.push(Client.cardJSON[cardInfo][i].name + '卡片效果：' + Client.cardJSON[cardInfo][i].ability + '\n');
                         console.log(cardInfoArray);
                     } else if (Client.userJSON[userInfo][index].userCard[i].cardStatus == "off") {
-                        noCardInfoArray.push(Client.cardJSON[cardInfo][i].name + '\n卡片效果：' + Client.cardJSON[cardInfo][i].ability + '\n');
+                        noCardInfoArray.push(Client.cardJSON[cardInfo][i].name + '卡片效果：' + Client.cardJSON[cardInfo][i].ability + '\n');
                         console.log(noCardInfoArray);
                     }
                 }
@@ -107,13 +117,13 @@ Client.on('message', message => {
         cardInfoArray = cardInfoArray.join('');
         noCardInfoArray = noCardInfoArray.join('');
 
-        message.channel.send(message.author.username + ' 的卡片資訊\n擁有卡片：\n' + cardInfoArray);
+        message.channel.send(message.author.username + ' 的卡片資訊\n擁有卡片：\n' + cardInfoArray
+            + '尚未擁有卡片：\n' + noCardInfoArray);
         /*
         for (var i = 0; i < cardInfoArray.length; i++) {
             message.channel.send(cardInfoArray[i]);
         }
         */
-        message.channel.send('尚未擁有卡片：\n' + noCardInfoArray);
         /*
         for (var i = 0; i < noCardInfoArray.length; i++) {
             message.channel.send(noCardInfoArray[i]);
@@ -214,12 +224,28 @@ Client.on('message', message => {
         var getSellCard;
         var cardName;
         var cardIndex;
+
         _, getSellCard = message.content.split(' ', 2);
         cardName = getSellCard[1];
         cardIndex = getSellCardIndex(cardName)
+
         if (canSell(message.author.id, cardIndex)) {
-            changeSelling(message.author.id, cardIndex);
-            message.channel.send(message.author.username + ' 正在出售卡片：' + cardName + '\n有興趣的買家請儘速出價！！');
+            console.log('can sell ' + cardName);
+            changeSelling(cardIndex, "true", message.author.username);
+            message.channel.send(message.author.username + ' 正在出售卡片：' + cardName + '\n有興趣的買家請儘速出價，出價時間為兩小時！！');
+            var sellTimeInterval = setTimeout(function () {
+                //highestBidPoint = getHighestPoint();
+                changeSelling(cardIndex, "false", message.author.username);
+                var bidder = Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray[Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray.length - 1];
+                var bidPoint = parseInt(Client.auctionJSON[auctionInfo][cardIndex].bidArray.priceArray[Client.auctionJSON[auctionInfo][cardIndex].bidArray.priceArray.length - 1]);
+                winningBidderGetCard(bidder, cardIndex, bidPoint);
+
+                message.channel.send(cardName + " 的拍賣已經結束，由 "
+                    + Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray[Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray.length - 1]
+                    + " 以 " + Client.auctionJSON[auctionInfo][cardIndex].bidArray.priceArray[Client.auctionJSON[auctionInfo][cardIndex].bidArray.priceArray.length - 1]
+                    + " 點數得標 ").catch(console.error);
+            }, 10 * 1000);
+
         } else if (!canSell(message.author.id, cardIndex)) {
             message.channel.send("尚未擁有該卡片，無法出售 " + cardName);
         } else {
@@ -235,15 +261,40 @@ Client.on('message', message => {
         var getBidCard;
         var cardName;
         var cardIndex;
+        var userIndex;
         var bidPrice;
+        var bidPriceArray = [];
+        var bidUsernameArray = [];
+        var bidResultDisplay = [];
+
         _, getBidCard = message.content.split(' ', 3);
         cardName = getBidCard[1];
-        console.log(cardName);
         bidPrice = parseInt(getBidCard[2], 10);
         cardIndex = getSellCardIndex(cardName)
-        if (canBid(message.author.id, cardIndex)) {
-            message.channel.send(message.author.username + ' 成功出價！\n出價：' + bidPrice + ' 點');
-        } else if (!canBid(message.author.id, cardIndex)) {
+        userIndex = changeUserIDToIndex(message.author.id);
+
+
+        if (bidPrice <= Client.userJSON[userInfo][userIndex].points) {
+            bidPriceArray = Client.auctionJSON[auctionInfo][cardIndex].bidArray.priceArray;
+            //console.log(bidPriceArray);
+            bidUsernameArray = Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray;
+            if (bidPriceArray == [] || bidPrice > bidPriceArray[bidPriceArray.length - 1]) {
+                //console.log(bidPriceArray);
+                bidToAuctionJSON(message.author.username, bidPrice, bidPriceArray, bidUsernameArray);
+                bidResultDisplay.push(message.author.username + '成功出價！\n出價 ' + bidPrice + ' 點數，為目前最高價！');
+            } else if (bidPrice <= bidPriceArray[bidPriceArray.length - 1]) {
+                bidResultDisplay.push(message.author.username + '出價失敗！！\n目前最高出價為 '
+                    + bidUsernameArray[bidUsernameArray.length - 1] + ' 的 ' + bidPriceArray[bidPriceArray.length - 1]
+                    + ' 點，有興趣的買家請出高價競標！');
+            }
+        } else {
+            bidResultDisplay.push(message.author.username + ' 點數不足，無法出價！');
+        }
+        console.log(bidResultDisplay);
+
+        if (canBid(cardIndex)) {
+            message.channel.send(bidResultDisplay);
+        } else if (!canBid(cardIndex)) {
             message.channel.send("尚未有人出售該卡片，無法出價！");
         } else {
             message.channel.send("格式錯誤，請輸入：$help 來查看詳細用法");
@@ -273,13 +324,20 @@ function inputUserID(userName, id) {
         if (userName == Client.userJSON[userInfo][i].username) {
             Client.userJSON[userInfo][i].userID = parseInt(id);
             console.log("Parse userID");
-        } else if (userName == "test") {
+        } else if (Client.userJSON[userInfo][i].username == "test") {
             Client.userJSON[userInfo][i].username = userName;
             Client.userJSON[userInfo][i].userID = parseInt(id);
             break;
         }
     }
     writeJSON(Client.userJSON);
+}
+
+function checkinReset() {
+    console.log("checkinReset at 9 am everyday");
+    for (var i = 0; i < Client.userJSON[userInfo].length; i++) {
+        Client.userJSON[userInfo][i].checkin = "false";
+    }
 }
 
 
@@ -453,7 +511,8 @@ function getSellCardIndex(cardName) {
 function canSell(id, cardIndex) {
     for (var i = 0; i < Client.userJSON[userInfo].length; i++) {
         if (id == Client.userJSON[userInfo][i].userID) {
-            if (Client.userJSON[userInfo][i].userCard[cardIndex].cardStatus == "on") {
+            if (Client.userJSON[userInfo][i].userCard[cardIndex].cardStatus == "on" &&
+                Client.auctionJSON[auctionInfo][cardIndex].inAuction == "false") {
                 return true;
             } else {
                 return false;
@@ -461,31 +520,50 @@ function canSell(id, cardIndex) {
         }
     }
 }
-function changeSelling(id, cardIndex) {
+function changeSelling(cardIndex, status, sellCardUsername) {
+
+    Client.auctionJSON[auctionInfo][cardIndex].inAuction = status;
+    console.log(Client.auctionJSON[auctionInfo][cardIndex].inAuction);
+    Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray[0] = sellCardUsername;
+
+    writeJSON(Client.auctionJSON);
+}
+
+function winningBidderGetCard(username, cardIndex, bidPoint) {
     for (var i = 0; i < Client.userJSON[userInfo].length; i++) {
-        if (id == Client.userJSON[userInfo][i].userID) {
-            Client.userJSON[userInfo][i].userCard[cardIndex].selling = "on";
+        if (Client.userJSON[userInfo][i].username == username) {
+            Client.userJSON[userInfo][i].userCard[cardIndex].cardStatus = "on";
+            Client.userJSON[userInfo][i].points -= bidPoint;
         }
     }
     writeJSON(Client.userJSON);
+
 }
 
-function canBid(id, cardIndex) {
-    for (var i = 0; i < Client.userJSON[userInfo].length; i++) {
-        if (id == Client.userJSON[userInfo][i].userID) {
-            if (Client.userJSON[userInfo][i].userCard[cardIndex].selling == "on") {
-                return true;
-            } else {
-                return false;
-            }
-        }
+function canBid(cardIndex) {
+    if (Client.auctionJSON[auctionInfo][cardIndex].inAuction == "true") {
+        return true;
+    } else {
+        return false;
     }
+}
+
+function bidToAuctionJSON(bidUsername, bidPrice, bidPriceArray, bidUsernameArray) {
+
+    bidPrice = parseInt(bidPrice);
+    bidPriceArray.push(bidPrice);
+    console.log(bidPriceArray);
+
+    bidUsernameArray.push(bidUsername);
+    console.log(bidUsernameArray);
+
+    writeJSON(Client.auctionJSON);
+
 }
 
 
 /*
 ============================================================================================================================
-//userful function
 */
 function GetRandomNum(Min, Max) {
     var Range = Max - Min;
