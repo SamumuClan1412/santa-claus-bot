@@ -21,11 +21,6 @@ Client.once('ready', () => {
     console.log('Ready!');
 });
 
-process.on('unhandledRejection', error => {
-    console.error('unhandledRejection', error);
-    process.exit(1) // To exit with a 'failure' code
-});
-
 
 
 //============================================================================================================================
@@ -36,12 +31,15 @@ const cardInfo = "cardInfo";
 const codeInfo = "codeInfo";
 const auctionInfo = "auctionInfo";
 const slotPlointConsume = -100;
+const checkinPoints = 200;
 
 //write user id to userinfo.json
 //display every message
 Client.on('message', message => {
     console.log(message.content);
-    inputUserID(message.author.username, message.author.id)
+    if (message.author.username != "Santa Claus") {
+        inputUserID(message.author.username, message.author.id)
+    }
 });
 //$help
 Client.on('message', message => {
@@ -60,16 +58,15 @@ checkinResetCron.start();
 
 Client.on('message', message => {
     if (message.content.startsWith(`${prefix}checkin`)) {
-        var checkinPoints = 200;
-        //console.log(bot.userJSON[userInfo][0].userID)
+
         for (var i = 0; i < Client.userJSON[userInfo].length; i++) {
             if (message.author.id == Client.userJSON[userInfo][i].userID) {
                 if (Client.userJSON[userInfo][i].checkin == "off") {
-                    //checkinJSON(message.author.id);
+                    console.log(message.author.id);
                     Client.userJSON[userInfo][i].checkin = "on";
                     writeJSON(Client.userJSON);
                     Client.userJSON[userInfo][i].points = Client.userJSON[userInfo][i].points + checkinPoints;
-                    //changePoints(message.author.id, checkinPoints);
+                    writeJSON(Client.userJSON);
                     message.channel.send('恭喜 ' + message.author.username + '獲得 ' + checkinPoints +
                         ' 點數！\n目前共有：' + Client.userJSON[userInfo][i].points + '點數');
                 } else if (Client.userJSON[userInfo][i].checkin == "on") {
@@ -105,10 +102,10 @@ Client.on('message', message => {
             if (message.author.id == Client.userJSON[userInfo][index].userID) {
                 for (var i = 0; i < Client.userJSON[userInfo][index].userCard.length; i++) {
                     if (Client.userJSON[userInfo][index].userCard[i].cardStatus == "on") {
-                        cardInfoArray.push(Client.cardJSON[cardInfo][i].name + '卡片效果：' + Client.cardJSON[cardInfo][i].ability + '\n');
+                        cardInfoArray.push(Client.cardJSON[cardInfo][i].name + '\n卡片效果：' + Client.cardJSON[cardInfo][i].ability + '\n');
                         console.log(cardInfoArray);
                     } else if (Client.userJSON[userInfo][index].userCard[i].cardStatus == "off") {
-                        noCardInfoArray.push(Client.cardJSON[cardInfo][i].name + '卡片效果：' + Client.cardJSON[cardInfo][i].ability + '\n');
+                        noCardInfoArray.push(Client.cardJSON[cardInfo][i].name + '\n卡片效果：' + Client.cardJSON[cardInfo][i].ability + '\n');
                         console.log(noCardInfoArray);
                     }
                 }
@@ -118,7 +115,7 @@ Client.on('message', message => {
         noCardInfoArray = noCardInfoArray.join('');
 
         message.channel.send(message.author.username + ' 的卡片資訊\n擁有卡片：\n' + cardInfoArray
-            + '尚未擁有卡片：\n' + noCardInfoArray);
+            + '\n尚未擁有卡片：\n' + noCardInfoArray);
         /*
         for (var i = 0; i < cardInfoArray.length; i++) {
             message.channel.send(cardInfoArray[i]);
@@ -161,11 +158,20 @@ Client.on('message', message => {
         var rankDisplay = [];
         message.channel.send('積分排行榜')
         rankArray = rankErc(rankArray);
-        for (var i = 1; i <= rankArray[1].length; i++) {
-            if (rankArray[1][rankArray[1].length - i] != "test") {
-                rankDisplay.push('第 ' + i + ' 名： ' + rankArray[1][rankArray[1].length - i] +
-                    ' 共 ' + rankArray[0][rankArray[0].length - i] + ' 分\n');
+        for (var i = 0; i < rankArray[1].length; i++) {
+            if (rankArray[1][i] != rankArray[1][i + 1]) {
+                rankDisplay.push('第 ' + (i + 1) + ' 名： ' + rankArray[1][i] +
+                    ' 共 ' + rankArray[0][i] + ' 分\n');
+            } else {
+                for (var j = 0; j < (rankArray[0].length - i); j++) {
+                    if (rankArray[0][i] == rankArray[0][i + j] && rankArray[0][i] != undefined) {
+                        rankDisplay.push('第 ' + (i + 1) + ' 名： ' + rankArray[1][i + j] +
+                            ' 共 ' + rankArray[0][i + j] + ' 分\n');
+                    }
+                }
+
             }
+
         }
         message.channel.send(rankDisplay);
         /*
@@ -228,28 +234,37 @@ Client.on('message', message => {
         _, getSellCard = message.content.split(' ', 2);
         cardName = getSellCard[1];
         cardIndex = getSellCardIndex(cardName)
-
-        if (canSell(message.author.id, cardIndex)) {
-            console.log('can sell ' + cardName);
-            changeSelling(cardIndex, "true", message.author.username);
-            message.channel.send(message.author.username + ' 正在出售卡片：' + cardName + '\n有興趣的買家請儘速出價，出價時間為兩小時！！');
-            var sellTimeInterval = setTimeout(function () {
-                //highestBidPoint = getHighestPoint();
-                changeSelling(cardIndex, "false", message.author.username);
-                var bidder = Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray[Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray.length - 1];
-                var bidPoint = parseInt(Client.auctionJSON[auctionInfo][cardIndex].bidArray.priceArray[Client.auctionJSON[auctionInfo][cardIndex].bidArray.priceArray.length - 1]);
-                winningBidderGetCard(bidder, cardIndex, bidPoint);
-
-                message.channel.send(cardName + " 的拍賣已經結束，由 "
-                    + Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray[Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray.length - 1]
-                    + " 以 " + Client.auctionJSON[auctionInfo][cardIndex].bidArray.priceArray[Client.auctionJSON[auctionInfo][cardIndex].bidArray.priceArray.length - 1]
-                    + " 點數得標 ").catch(console.error);
-            }, 10 * 1000);
-
-        } else if (!canSell(message.author.id, cardIndex)) {
-            message.channel.send("尚未擁有該卡片，無法出售 " + cardName);
+        //console.log(cardIndex);
+        if (cardIndex == undefined) {
+            message.channel.send('卡片名稱輸入錯誤，請輸入 $card 確認');
         } else {
-            message.channel.send("格式錯誤，請輸入：$help 來查看詳細用法");
+
+            if (canSell(message.author.id, cardIndex)) {
+                console.log('can sell ' + cardName);
+                changeSelling(cardIndex, "true", message.author.username);
+                message.channel.send(message.author.username + ' 正在出售卡片：' + cardName + '\n有興趣的買家請儘速出價，出價時間為兩小時！！');
+                var sellTimeInterval = setTimeout(function () {
+                    //highestBidPoint = getHighestPoint();
+                    changeSelling(cardIndex, "false", message.author.username);
+                    var bidder = Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray[Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray.length - 1];
+                    var bidPoint = parseInt(Client.auctionJSON[auctionInfo][cardIndex].bidArray.priceArray[Client.auctionJSON[auctionInfo][cardIndex].bidArray.priceArray.length - 1]);
+                    winningBidderGetCard(bidder, cardIndex, bidPoint);
+
+                    if (bidder == message.author.username) {
+                        message.channel.send(cardName + " 的拍賣會已經結束，無人競拍，卡片歸還原主");
+                    } else {
+                        message.channel.send(cardName + " 的拍賣已經結束，由 "
+                            + Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray[Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray.length - 1]
+                            + " 以 " + Client.auctionJSON[auctionInfo][cardIndex].bidArray.priceArray[Client.auctionJSON[auctionInfo][cardIndex].bidArray.priceArray.length - 1]
+                            + " 點數得標 ").catch(console.error);
+                    }
+                }, 20 * 1000);
+
+            } else if (!canSell(message.author.id, cardIndex)) {
+                message.channel.send("尚未擁有該卡片，無法出售 " + cardName);
+            } else {
+                message.channel.send("格式錯誤，請輸入：$help 來查看詳細用法");
+            }
         }
     }
 })
@@ -273,30 +288,37 @@ Client.on('message', message => {
         cardIndex = getSellCardIndex(cardName)
         userIndex = changeUserIDToIndex(message.author.id);
 
-
-        if (bidPrice <= Client.userJSON[userInfo][userIndex].points) {
-            bidPriceArray = Client.auctionJSON[auctionInfo][cardIndex].bidArray.priceArray;
-            //console.log(bidPriceArray);
-            bidUsernameArray = Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray;
-            if (bidPriceArray == [] || bidPrice > bidPriceArray[bidPriceArray.length - 1]) {
-                //console.log(bidPriceArray);
-                bidToAuctionJSON(message.author.username, bidPrice, bidPriceArray, bidUsernameArray);
-                bidResultDisplay.push(message.author.username + '成功出價！\n出價 ' + bidPrice + ' 點數，為目前最高價！');
-            } else if (bidPrice <= bidPriceArray[bidPriceArray.length - 1]) {
-                bidResultDisplay.push(message.author.username + '出價失敗！！\n目前最高出價為 '
-                    + bidUsernameArray[bidUsernameArray.length - 1] + ' 的 ' + bidPriceArray[bidPriceArray.length - 1]
-                    + ' 點，有興趣的買家請出高價競標！');
-            }
+        if (cardIndex == undefined) {
+            bidResultDisplay.push("格式錯誤，請輸入：$help 來查看詳細用法");
         } else {
-            bidResultDisplay.push(message.author.username + ' 點數不足，無法出價！');
+            if (bidPrice <= Client.userJSON[userInfo][userIndex].points) {
+                bidPriceArray = Client.auctionJSON[auctionInfo][cardIndex].bidArray.priceArray;
+                //console.log(bidPriceArray);
+                bidUsernameArray = Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray;
+                if (bidPriceArray == [] || bidPrice > bidPriceArray[bidPriceArray.length - 1]) {
+                    if (message.author.username != Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray[0]) {
+                        bidToAuctionJSON(message.author.username, bidPrice, bidPriceArray, bidUsernameArray);
+                        bidResultDisplay.push(message.author.username + '成功出價！\n出價 ' + bidPrice + ' 點數，為目前最高價！');
+                    } else {
+                        bidResultDisplay.push("禁止哄抬物價，謝謝配合！");
+                    }
+                } else if (bidPrice <= bidPriceArray[bidPriceArray.length - 1]) {
+                    bidResultDisplay.push(message.author.username + '出價失敗！！\n目前最高出價為 '
+                        + bidUsernameArray[bidUsernameArray.length - 1] + ' 的 ' + bidPriceArray[bidPriceArray.length - 1]
+                        + ' 點，有興趣的買家請出高價競標！');
+                }
+            } else {
+                bidResultDisplay.push(message.author.username + ' 點數不足，無法出價！');
+            }
+            console.log(bidResultDisplay);
         }
-        console.log(bidResultDisplay);
+
 
         if (canBid(cardIndex)) {
             message.channel.send(bidResultDisplay);
         } else if (!canBid(cardIndex)) {
             message.channel.send("尚未有人出售該卡片，無法出價！");
-        } else {
+        } else if (canBid(cardIndex == undefined)) {
             message.channel.send("格式錯誤，請輸入：$help 來查看詳細用法");
         }
     }
@@ -324,6 +346,7 @@ function inputUserID(userName, id) {
         if (userName == Client.userJSON[userInfo][i].username) {
             Client.userJSON[userInfo][i].userID = parseInt(id);
             console.log("Parse userID");
+            break;
         } else if (Client.userJSON[userInfo][i].username == "test") {
             Client.userJSON[userInfo][i].username = userName;
             Client.userJSON[userInfo][i].userID = parseInt(id);
@@ -337,6 +360,7 @@ function checkinReset() {
     console.log("checkinReset at 9 am everyday");
     for (var i = 0; i < Client.userJSON[userInfo].length; i++) {
         Client.userJSON[userInfo][i].checkin = "false";
+        console.log('Reset checkin ' + Client.userJSON[userInfo][i].username);
     }
 }
 
@@ -412,28 +436,60 @@ function changeUserIDToIndex(id, index) {
 
 function rankErc(rankArray) {
     var ercArray = [];
-    var nameArray = [];
-    for (var i = 0; i < Client.userJSON[userInfo].length; i++) {
-        ercArray.push(Client.userJSON[userInfo][i].erc);
+    var topErcArray = [];
+    var topNameArray = [];
+    for (i = 0; i < Client.userJSON[userInfo].length; i++) {
+        if (Client.userJSON[userInfo][i].username != "test") {
+            ercArray.push(Client.userJSON[userInfo][i].erc);
+        }
     }
+    //sort erc array
     ercArray = bubbleSort(ercArray);
+    console.log('ercArray:' + ercArray);
 
-    for (var i = 0; i < ercArray.length; i++) {
+    //only display Top10
+    if (ercArray.length < 10) {
+        for (var i = 1; i <= ercArray.length; i++) {
+            topErcArray.push(ercArray[ercArray.length - i]);
+        }
+    } else if (ercArray.length >= 10) {
+        for (var i = 1; i <= 10; i++) {
+            topErcArray.push(ercArray[ercArray.length - i]);
+        }
+    }
+    console.log(topErcArray);
+
+
+    //infer name array
+    for (var i = 0; i < topErcArray.length; i++) {
         for (var j = 0; j < Client.userJSON[userInfo].length; j++) {
-            if (ercArray[i] == Client.userJSON[userInfo][j].erc) {
-                nameArray.push(Client.userJSON[userInfo][j].username);
-                break;
+            if (topErcArray[i] == Client.userJSON[userInfo][j].erc) {
+                //console.log('same erc');
+                //sort name array
+                if (topNameArray.length == 0) {
+                    topNameArray.push(Client.userJSON[userInfo][j].username);
+                    console.log('if topNameArray = []');
+                } else {
+                    for (var k = 0; k < topErcArray.length; k++) {
+                        if (Client.userJSON[userInfo][j].username != topNameArray[k] && topNameArray != undefined) {
+                            topNameArray.push(Client.userJSON[userInfo][j].username);
+                            console.log('confirm username don\'t duplicate');
+                        }
+                    }
+                }
             }
         }
     }
-    console.log(nameArray);
+    console.log('topNameArray' + topNameArray);
+
+
     for (var i = 0; i < 2; i++) {
         rankArray[i] = [];
-        for (var j = 0; j < ercArray.length; j++) {
+        for (var j = 0; j < topErcArray.length; j++) {
             if (i == 0) {
-                rankArray[i][j] = ercArray[j];
+                rankArray[i][j] = topErcArray[j];
             } else if (i == 1) {
-                rankArray[i][j] = nameArray[j];
+                rankArray[i][j] = topNameArray[j];
             }
         }
     }
@@ -472,7 +528,7 @@ function getErcFromPrivateKey(id, code, result) {
             if (Client.codeJSON[codeInfo][i].status == "on") {
                 getErc = Client.codeJSON[codeInfo][i].erc;
                 Client.codeJSON[codeInfo][i].status = "off";
-                writeJSON(bot.codeJSON);
+                writeJSON(Client.codeJSON);
                 for (var j = 0; j < Client.userJSON[userInfo].length; j++) {
                     if (id == Client.userJSON[userInfo][j].userID) {
                         Client.userJSON[userInfo][j].erc += getErc
@@ -525,6 +581,7 @@ function changeSelling(cardIndex, status, sellCardUsername) {
     Client.auctionJSON[auctionInfo][cardIndex].inAuction = status;
     console.log(Client.auctionJSON[auctionInfo][cardIndex].inAuction);
     Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray[0] = sellCardUsername;
+    console.log(Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray);
 
     writeJSON(Client.auctionJSON);
 }
@@ -543,8 +600,10 @@ function winningBidderGetCard(username, cardIndex, bidPoint) {
 function canBid(cardIndex) {
     if (Client.auctionJSON[auctionInfo][cardIndex].inAuction == "true") {
         return true;
-    } else {
+    } else if (Client.auctionJSON[auctionInfo][cardIndex].inAuction == "false") {
         return false;
+    } else {
+        return undefined;
     }
 }
 
@@ -572,13 +631,12 @@ function GetRandomNum(Min, Max) {
 }
 
 function bubbleSort(array) {
-    const n = array.length;
-    // 一共要跑 n 輪
-    for (var i = 0; i < n; i++) {
+
+    for (var i = 0; i < array.length; i++) {
         // 從第一個元素開始，不斷跑到第 n - 1 - i 個
         // 原本是 n - 1，會再加上 - i 是因為最後 i 個元素已經排好了
         // 所以沒必要跟那些排好的元素比較
-        for (var j = 0; j < n - 1 - i; j++) {
+        for (var j = 0; j < array.length - (i + 1); j++) {
             if (array[j] > array[j + 1]) {
                 [array[j], array[j + 1]] = [array[j + 1], array[j]];
             }
