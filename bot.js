@@ -287,8 +287,9 @@ Client.on('message', message => {
         bidPrice = parseInt(getBidCard[2], 10);
         cardIndex = getSellCardIndex(cardName)
         userIndex = changeUserIDToIndex(message.author.id);
+        console.log(cardIndex);
 
-        if (cardIndex == undefined) {
+        if (cardIndex == undefined || bidPrice == undefined) {
             bidResultDisplay.push("格式錯誤，請輸入：$help 來查看詳細用法");
         } else {
             if (bidPrice <= Client.userJSON[userInfo][userIndex].points) {
@@ -313,13 +314,16 @@ Client.on('message', message => {
             console.log(bidResultDisplay);
         }
 
-
-        if (canBid(cardIndex)) {
-            message.channel.send(bidResultDisplay);
-        } else if (!canBid(cardIndex)) {
-            message.channel.send("尚未有人出售該卡片，無法出價！");
-        } else if (canBid(cardIndex == undefined)) {
+        if (cardIndex == undefined || bidPrice == undefined) {
             message.channel.send("格式錯誤，請輸入：$help 來查看詳細用法");
+        } else {
+            if (canBid(cardIndex)) {
+                message.channel.send(bidResultDisplay);
+            } else if (!canBid(cardIndex)) {
+                message.channel.send("尚未有人出售該卡片，無法出價！");
+            } else if (canBid(cardIndex == undefined)) {
+                message.channel.send("格式錯誤，請輸入：$help 來查看詳細用法");
+            }
         }
     }
 })
@@ -644,4 +648,5 @@ function bubbleSort(array) {
     }
     return array;
 }
+
 Client.login(process.env.BOT_TOKEN);//BOT_TOKEN is the Client Secret
