@@ -132,19 +132,17 @@ Client.on('message', message => {
 Client.on('message', message => {
     if (message.content.startsWith(`${prefix}slot`)) {
         var slotPrize;
-        message.channel.send('開始抽獎')
-        message.channel.send('.');
+        message.channel.send(message.author.username + ' 開始抽獎');
 
         //index = changeUserIDToIndex(message.author.id, index);
         for (var index = 0; index < Client.userJSON[userInfo].length; index++) {
             if (message.author.id == Client.userJSON[userInfo][index].userID) {
                 if (Client.userJSON.userInfo[index].points + slotPlointConsume < 0) {
-                    message.channel.send('點數不足無法抽獎！')
+                    message.channel.send(message.author.username + ' 點數不足無法抽獎！')
                 } else {
-                    setTimeout(writeJSON, 3000);
-                    message.channel.send('...');
-                    slotPrize = slot(message.author.id, slotPrize)
-                    message.channel.send('消耗 ' + (-slotPlointConsume) + ' 點...\n' + slotPrize);
+                    slotPrize = slot(message.author.id, slotPrize);
+                    message.channel.send(message.author.username + ' 消耗 ' + (-slotPlointConsume) + ' 點...\n' + slotPrize
+                        + ' 剩餘點數 ' + Client.userJSON[userInfo].points + ' 點');
                 }
             }
         }
@@ -191,19 +189,22 @@ Client.on('message', message => {
         var exchangePoints = parseInt(point[1], 10);
         var exchangeErc = parseFloat((exchangePoints * 0.1).toFixed(1));
 
-        for (var i = 0; i < Client.userJSON[userInfo].length; i++) {
-            if (message.author.id == Client.userJSON[userInfo][i].userID) {
-                if (Client.userJSON[userInfo][i].points - exchangePoints > 0) {
-                    Client.userJSON[userInfo][i].points -= exchangePoints;
-                    Client.userJSON[userInfo][i].erc += exchangeErc;
-                    writeJSON(Client.userJSON);
-                    message.channel.send('花費 ' + exchangePoints + ' 點數兌換 ' + exchangeErc + ' 積分!');
-                } else {
-                    message.channel.send('點數不足無法兌換！')
+        if (exchangePoints == undefined) {
+            message.channel.send('格式錯誤，請輸入 $help 查看用法');
+        } else {
+            for (var i = 0; i < Client.userJSON[userInfo].length; i++) {
+                if (message.author.id == Client.userJSON[userInfo][i].userID) {
+                    if (Client.userJSON[userInfo][i].points - exchangePoints > 0) {
+                        Client.userJSON[userInfo][i].points -= exchangePoints;
+                        Client.userJSON[userInfo][i].erc += exchangeErc;
+                        writeJSON(Client.userJSON);
+                        message.channel.send('花費 ' + exchangePoints + ' 點數兌換 ' + exchangeErc + ' 積分!');
+                    } else {
+                        message.channel.send('點數不足無法兌換！')
+                    }
                 }
             }
         }
-
 
     }
 })

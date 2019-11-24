@@ -3,7 +3,7 @@
         {
             "userID": 519777074198609900,
             "username": "Roger",
-            "points": 700,
+            "points": 500,
             "erc": 100,
             "userCard": [
                 {
@@ -47,7 +47,7 @@
                     "selling": "false"
                 }
             ],
-            "checkin": "on"
+            "checkin": "off"
         },
         {
             "userID": 0,
@@ -100,8 +100,8 @@
         },
         {
             "userID": 0,
-            "username": "test",
-            "points": 0,
+            "username": "Bmao",
+            "points": 1000,
             "erc": 0,
             "userCard": [
                 {
