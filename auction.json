@@ -3,7 +3,6 @@
         {
             "id": 1,
             "name": "妙蛙種子",
-            "ability": "藤鞭",
             "bidArray": {
                 "priceArray": [
                     0
@@ -17,7 +16,6 @@
         {
             "id": 2,
             "name": "小火龍",
-            "ability": "火焰拳",
             "bidArray": {
                 "priceArray": [
                     0
@@ -31,7 +29,6 @@
         {
             "id": 3,
             "name": "傑尼龜",
-            "ability": "水炮",
             "bidArray": {
                 "priceArray": [
                     0
@@ -45,7 +42,6 @@
         {
             "id": 4,
             "name": "皮卡丘",
-            "ability": "雷電拳",
             "bidArray": {
                 "priceArray": [
                     0
@@ -59,7 +55,6 @@
         {
             "id": 5,
             "name": "波波",
-            "ability": "翅膀攻擊",
             "bidArray": {
                 "priceArray": [
                     0
@@ -73,7 +68,6 @@
         {
             "id": 6,
             "name": "喵喵",
-            "ability": "居合斬",
             "bidArray": {
                 "priceArray": [
                     0
@@ -87,7 +81,6 @@
         {
             "id": 7,
             "name": "腕力",
-            "ability": "拍擊",
             "bidArray": {
                 "priceArray": [
                     0
@@ -101,7 +94,6 @@
         {
             "id": 8,
             "name": "小拳石",
-            "ability": "連續拳",
             "bidArray": {
                 "priceArray": [
                     0
@@ -115,7 +107,6 @@
         {
             "id": 9,
             "name": "卡拉卡拉",
-            "ability": "劍舞",
             "bidArray": {
                 "priceArray": [
                     0
@@ -129,7 +120,6 @@
         {
             "id": 10,
             "name": "伊布",
-            "ability": "角撞",
             "bidArray": {
                 "priceArray": [
                     0

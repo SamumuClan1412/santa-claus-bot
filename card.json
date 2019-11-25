@@ -2,52 +2,52 @@
     "cardInfo": [
         {
             "id": 1,
-            "name": "【妙蛙種子】",
+            "name": "妙蛙種子",
             "ability": "藤鞭"
         },
         {
             "id": 2,
-            "name": "【小火龍】",
-            "ability": "火焰拳"
+            "name": "小火龍",
+            "ability": "火花"
         },
         {
             "id": 3,
-            "name": "【傑尼龜】",
+            "name": "傑尼龜",
             "ability": "水炮"
         },
         {
             "id": 4,
-            "name": "【皮卡丘】",
-            "ability": "雷電拳"
+            "name": "皮卡丘",
+            "ability": "十萬伏特"
         },
         {
             "id": 5,
-            "name": "【波波】",
-            "ability": "翅膀攻擊"
+            "name": "波波",
+            "ability": "空氣斬"
         },
         {
             "id": 6,
-            "name": "【喵喵】",
+            "name": "喵喵",
             "ability": "居合斬"
         },
         {
             "id": 7,
-            "name": "【腕力】",
+            "name": "腕力",
             "ability": "拍擊"
         },
         {
             "id": 8,
-            "name": "【小拳石】",
+            "name": "小拳石",
             "ability": "連續拳"
         },
         {
             "id": 9,
-            "name": "【卡拉卡拉】",
-            "ability": "劍舞"
+            "name": "卡比獸",
+            "ability": "泰山壓頂"
         },
         {
             "id": 10,
-            "name": "【伊布】",
+            "name": "伊布",
             "ability": "角撞"
         }
     ]

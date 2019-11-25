@@ -53,7 +53,7 @@
             "userID": 0,
             "username": "evelion41",
             "points": 0,
-            "erc": 0,
+            "erc": 10,
             "userCard": [
                 {
                     "cardStatus": "off",
@@ -101,8 +101,8 @@
         {
             "userID": 0,
             "username": "Bmao",
-            "points": 1000,
-            "erc": 0,
+            "points": 3000,
+            "erc": 30,
             "userCard": [
                 {
                     "cardStatus": "off",

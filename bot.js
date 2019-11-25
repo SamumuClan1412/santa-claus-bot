@@ -53,7 +53,7 @@ Client.on('message', message => {
 
 //$checkin
 //checkin reset at 9 am everyday
-let checkinResetCron = new cron.CronJob('00 40 14 * * *', checkinReset);
+let checkinResetCron = new cron.CronJob('00 00 09 * * *', checkinReset);
 checkinResetCron.start();
 
 Client.on('message', message => {
@@ -102,10 +102,10 @@ Client.on('message', message => {
             if (message.author.id == Client.userJSON[userInfo][index].userID) {
                 for (var i = 0; i < Client.userJSON[userInfo][index].userCard.length; i++) {
                     if (Client.userJSON[userInfo][index].userCard[i].cardStatus == "on") {
-                        cardInfoArray.push(Client.cardJSON[cardInfo][i].name + '\n卡片效果：' + Client.cardJSON[cardInfo][i].ability + '\n');
+                        cardInfoArray.push('【' + Client.cardJSON[cardInfo][i].name + '】\n卡片效果：' + Client.cardJSON[cardInfo][i].ability + '\n');
                         console.log(cardInfoArray);
                     } else if (Client.userJSON[userInfo][index].userCard[i].cardStatus == "off") {
-                        noCardInfoArray.push(Client.cardJSON[cardInfo][i].name + '\n卡片效果：' + Client.cardJSON[cardInfo][i].ability + '\n');
+                        noCardInfoArray.push('【' + Client.cardJSON[cardInfo][i].name + '】\n卡片效果：' + Client.cardJSON[cardInfo][i].ability + '\n');
                         console.log(noCardInfoArray);
                     }
                 }
@@ -135,14 +135,14 @@ Client.on('message', message => {
         message.channel.send(message.author.username + ' 開始抽獎');
 
         //index = changeUserIDToIndex(message.author.id, index);
-        for (var index = 0; index < Client.userJSON[userInfo].length; index++) {
-            if (message.author.id == Client.userJSON[userInfo][index].userID) {
-                if (Client.userJSON.userInfo[index].points + slotPlointConsume < 0) {
+        for (var i = 0; i < Client.userJSON[userInfo].length; i++) {
+            if (message.author.id == Client.userJSON[userInfo][i].userID) {
+                if (Client.userJSON.userInfo[i].points + slotPlointConsume < 0) {
                     message.channel.send(message.author.username + ' 點數不足無法抽獎！')
                 } else {
                     slotPrize = slot(message.author.id, slotPrize);
                     message.channel.send(message.author.username + ' 消耗 ' + (-slotPlointConsume) + ' 點...\n' + slotPrize
-                        + ' 剩餘點數 ' + Client.userJSON[userInfo].points + ' 點');
+                        + ' \n剩餘點數 ' + Client.userJSON[userInfo][i].points + ' 點');
                 }
             }
         }
@@ -243,7 +243,7 @@ Client.on('message', message => {
             if (canSell(message.author.id, cardIndex)) {
                 console.log('can sell ' + cardName);
                 changeSelling(cardIndex, "true", message.author.username);
-                message.channel.send(message.author.username + ' 正在出售卡片：' + cardName + '\n有興趣的買家請儘速出價，出價時間為兩小時！！');
+                message.channel.send(message.author.username + ' 正在出售卡片：' + cardName + '\n有興趣的買家請儘速出價，出價時間為 10 分鐘！！');
                 var sellTimeInterval = setTimeout(function () {
                     //highestBidPoint = getHighestPoint();
                     changeSelling(cardIndex, "false", message.author.username);
@@ -259,7 +259,7 @@ Client.on('message', message => {
                             + " 以 " + Client.auctionJSON[auctionInfo][cardIndex].bidArray.priceArray[Client.auctionJSON[auctionInfo][cardIndex].bidArray.priceArray.length - 1]
                             + " 點數得標 ").catch(console.error);
                     }
-                }, 20 * 1000);
+                }, 10 * 60 * 1000);
 
             } else if (!canSell(message.author.id, cardIndex)) {
                 message.channel.send("尚未擁有該卡片，無法出售 " + cardName);
@@ -475,11 +475,8 @@ function rankErc(rankArray) {
                     topNameArray.push(Client.userJSON[userInfo][j].username);
                     console.log('if topNameArray = []');
                 } else {
-                    for (var k = 0; k < topErcArray.length; k++) {
-                        if (Client.userJSON[userInfo][j].username != topNameArray[k] && topNameArray != undefined) {
-                            topNameArray.push(Client.userJSON[userInfo][j].username);
-                            console.log('confirm username don\'t duplicate');
-                        }
+                    if (topNameArray[0] != undefined) {
+                        topNameArray.push(Client.userJSON[userInfo][j].username);
                     }
                 }
             }
