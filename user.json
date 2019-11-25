@@ -5,6 +5,7 @@
             "username": "Roger",
             "points": 500,
             "erc": 100,
+            "messageAmount": 0,
             "userCard": [
                 {
                     "cardStatus": "on",
@@ -54,6 +55,7 @@
             "username": "evelion41",
             "points": 0,
             "erc": 10,
+            "messageAmount": 0,
             "userCard": [
                 {
                     "cardStatus": "off",
@@ -103,6 +105,7 @@
             "username": "Bmao",
             "points": 3000,
             "erc": 30,
+            "messageAmount": 0,
             "userCard": [
                 {
                     "cardStatus": "off",
@@ -152,6 +155,7 @@
             "username": "test",
             "points": 0,
             "erc": 0,
+            "messageAmount": 0,
             "userCard": [
                 {
                     "cardStatus": "off",
@@ -201,6 +205,7 @@
             "username": "test",
             "points": 0,
             "erc": 0,
+            "messageAmount": 0,
             "userCard": [
                 {
                     "cardStatus": "off",
@@ -250,6 +255,7 @@
             "username": "test",
             "points": 0,
             "erc": 0,
+            "messageAmount": 0,
             "userCard": [
                 {
                     "cardStatus": "off",
@@ -299,6 +305,7 @@
             "username": "test",
             "points": 0,
             "erc": 0,
+            "messageAmount": 0,
             "userCard": [
                 {
                     "cardStatus": "off",
@@ -348,6 +355,7 @@
             "username": "test",
             "points": 0,
             "erc": 0,
+            "messageAmount": 0,
             "userCard": [
                 {
                     "cardStatus": "off",

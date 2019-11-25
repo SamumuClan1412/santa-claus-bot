@@ -36,9 +36,14 @@ const checkinPoints = 200;
 //write user id to userinfo.json
 //display every message
 Client.on('message', message => {
+    var userIndex;
     console.log(message.content);
     if (message.author.username != "Santa Claus") {
         inputUserID(message.author.username, message.author.id)
+        userIndex = changeUserIDToIndex(message.author.id);
+        Client.userJSON[userInfo][userIndex].messageAmount += 1;
+        Client.userJSON[userInfo][userIndex].points += 5;
+        writeJSON(Client.userJSON);
     }
 });
 //$help
