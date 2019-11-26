@@ -42,7 +42,7 @@ Client.on('message', message => {
         inputUserID(message.author.username, message.author.id)
         userIndex = changeUserIDToIndex(message.author.id);
         Client.userJSON[userInfo][userIndex].messageAmount += 1;
-        Client.userJSON[userInfo][userIndex].points += 5;
+        Client.userJSON[userInfo][userIndex].points += 2;
         writeJSON(Client.userJSON);
     }
 });
@@ -68,7 +68,7 @@ Client.on('message', message => {
         message.channel.send('命令列表\n$checkin：每日登入領取 200 點' +
             '\n$info：查看個人資訊\n$card：查看卡片資訊\n$slot：花費 100 點數抽獎\n$rank：查看積分排行榜'
             + '\n$exchange 100：兌換 100 點數為 10 積分\n$code xxx：輸入序號兌換積分\n$sell hello：販賣已擁有卡片 hello'
-            + '\n$bid hello 100：參加拍賣會，對 hello 出價 100 點數，時限內價高者得');
+            + '\n$bid hello 100：參加拍賣會，對 hello 出價 100 點數，時限內價高者得\n貢獻訊息獲得點數，請多多活絡氣氛！');
     }
 })
 
@@ -125,11 +125,10 @@ Client.on('message', message => {
                     if (Client.userJSON[userInfo][index].userCard[i].cardStatus == "on") {
                         cardInfoArray.push('【' + Client.cardJSON[cardInfo][i].name + '】\n卡片效果：' + Client.cardJSON[cardInfo][i].ability + '\n');
                         console.log(cardInfoArray);
-                    } /*
-                    else if (Client.userJSON[userInfo][index].userCard[i].cardStatus == "off") {
+                    } else if (Client.userJSON[userInfo][index].userCard[i].cardStatus == "off") {
                         noCardInfoArray.push('【' + Client.cardJSON[cardInfo][i].name + '】\n卡片效果：' + Client.cardJSON[cardInfo][i].ability + '\n');
                         console.log(noCardInfoArray);
-                    }*/
+                    }
                 }
             }
         }
