@@ -46,6 +46,22 @@ Client.on('message', message => {
         writeJSON(Client.userJSON);
     }
 });
+
+//$test
+/*
+Client.on('message', message => {
+    if (message.content.startsWith(`${prefix}test`)) {
+        wirteUserJSON();
+        message.channel.send('testing don\'t bother me');
+    }
+})
+*/
+
+//write all json at 4 am everyday
+let writeAllJSONCron = new cron.CronJob('00 00 04 * * *', writeAllJSON);
+writeAllJSONCron.start();
+
+
 //$help
 Client.on('message', message => {
     if (message.content.startsWith(`${prefix}help`)) {
@@ -109,10 +125,11 @@ Client.on('message', message => {
                     if (Client.userJSON[userInfo][index].userCard[i].cardStatus == "on") {
                         cardInfoArray.push('【' + Client.cardJSON[cardInfo][i].name + '】\n卡片效果：' + Client.cardJSON[cardInfo][i].ability + '\n');
                         console.log(cardInfoArray);
-                    } else if (Client.userJSON[userInfo][index].userCard[i].cardStatus == "off") {
+                    } /*
+                    else if (Client.userJSON[userInfo][index].userCard[i].cardStatus == "off") {
                         noCardInfoArray.push('【' + Client.cardJSON[cardInfo][i].name + '】\n卡片效果：' + Client.cardJSON[cardInfo][i].ability + '\n');
                         console.log(noCardInfoArray);
-                    }
+                    }*/
                 }
             }
         }
@@ -264,7 +281,11 @@ Client.on('message', message => {
                             + " 以 " + Client.auctionJSON[auctionInfo][cardIndex].bidArray.priceArray[Client.auctionJSON[auctionInfo][cardIndex].bidArray.priceArray.length - 1]
                             + " 點數得標 ").catch(console.error);
                     }
-                }, 10 * 60 * 1000);
+                    Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray = ["Seller"];
+                    Client.auctionJSON[auctionInfo][cardIndex].bidArray.priceArray = [0];
+                    console.log(Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray);
+                }, 10 * 1000);
+
 
             } else if (!canSell(message.author.id, cardIndex)) {
                 message.channel.send("尚未擁有該卡片，無法出售 " + cardName);
@@ -369,7 +390,7 @@ function inputUserID(userName, id) {
 function checkinReset() {
     console.log("checkinReset at 9 am everyday");
     for (var i = 0; i < Client.userJSON[userInfo].length; i++) {
-        Client.userJSON[userInfo][i].checkin = "false";
+        Client.userJSON[userInfo][i].checkin = "off";
         console.log('Reset checkin ' + Client.userJSON[userInfo][i].username);
     }
 }
@@ -480,8 +501,11 @@ function rankErc(rankArray) {
                     topNameArray.push(Client.userJSON[userInfo][j].username);
                     console.log('if topNameArray = []');
                 } else {
-                    if (topNameArray[0] != undefined) {
-                        topNameArray.push(Client.userJSON[userInfo][j].username);
+                    for (var k = 0; k < topNameArray.length; k++) {
+                        if (topNameArray[0] != undefined && topNameArray[i] != Client.userJSON[userInfo][j].username) {
+                            topNameArray.push(Client.userJSON[userInfo][j].username);
+
+                        }
                     }
                 }
             }
@@ -627,6 +651,73 @@ function bidToAuctionJSON(bidUsername, bidPrice, bidPriceArray, bidUsernameArray
 
 }
 
+function wirteUserJSON() {
+    fs.readFile('./user.json', function (err, userJSON) {
+        if (err) {
+            return console.error(err);
+        }
+        var user = userJSON.toString();
+        user = JSON.parse(user);
+
+        //writing all data in user.json except username == test || userID == 0
+        for (var i = 0; i < user.userInfo.length; i++) {
+
+            if (Client.userJSON[userInfo][i].userID != 0 && Client.userJSON[userInfo][i].username != "test") {
+
+                user.userInfo[i].userID = Client.userJSON[userInfo][i].userID;
+                user.userInfo[i].username = Client.userJSON[userInfo][i].username;
+                user.userInfo[i].points = Client.userJSON[userInfo][i].points;
+                user.userInfo[i].erc = Client.userJSON[userInfo][i].erc;
+                user.userInfo[i].messageAmount = Client.userJSON[userInfo][i].messageAmount;
+                for (var j = 0; j < user.userInfo[i].userCard.length; j++) {
+                    user.userInfo[i].userCard[j].cardStatus = Client.userJSON[userInfo][i].userCard[j].cardStatus;
+                    user.userInfo[i].userCard[j].selling = Client.userJSON[userInfo][i].userCard[j].selling;
+                }
+                user.userInfo[i].checkin = Client.userJSON[userInfo][i].checkin;
+            }
+        }
+
+        var str = JSON.stringify(user);
+        fs.writeFile('./user.json', str, function (err) {
+            if (err) {
+                console.error(err);
+            }
+            console.log('Write all changes into user.json');
+        })
+    })
+
+}
+
+function writeAuctionJSON() {
+    fs.readFile('./auction.json', function (err, auctionJSON) {
+        if (err) {
+            return console.error(err);
+        }
+        var auction = auctionJSON.toString();
+        auction = JSON.parse(auction);
+
+        for (var i = 0; i < auctionJSON.auctionInfo.length; i++) {
+            auction.auctionInfo[i].id = Client.auctionJSON[auctionInfo][i].id;
+            auction.auctionInfo[i].name = Client.auctionJSON[auctionInfo][i].name;
+            auction.auctionInfo[i].inAuction = Client.auctionJSON[auctionInfo][i].inAuction;
+        }
+
+
+        var str = JSON.stringify(auction);
+        fs.writeFile('./card.json', str, function (err) {
+            if (err) {
+                console.error(err);
+            }
+            console.log('Write all changes into auction.json');
+        })
+    })
+
+}
+function writeAllJSON() {
+    wirteUserJSON();
+    writeAuctionJSON();
+    console.log('write user.json and auction.json at 4 am');
+}
 
 /*
 ============================================================================================================================

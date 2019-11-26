@@ -3,9 +3,9 @@
         {
             "userID": 519777074198609900,
             "username": "Roger",
-            "points": 500,
-            "erc": 100,
-            "messageAmount": 0,
+            "points": 505,
+            "erc": 101,
+            "messageAmount": 1,
             "userCard": [
                 {
                     "cardStatus": "on",
@@ -54,7 +54,7 @@
             "userID": 0,
             "username": "evelion41",
             "points": 0,
-            "erc": 10,
+            "erc": 15,
             "messageAmount": 0,
             "userCard": [
                 {
@@ -104,7 +104,7 @@
             "userID": 0,
             "username": "Bmao",
             "points": 3000,
-            "erc": 30,
+            "erc": 33,
             "messageAmount": 0,
             "userCard": [
                 {
