@@ -139,7 +139,7 @@ Client.on('message', message => {
                     //evolve card info display
                     if (Client.userJSON[userInfo][j].userEvolveCard[i].cardStatus == "on") {
                         evolveCardInfoArray.push('【' + Client.cardJSON[evolveCardInfo][i].name + '】\n卡片效果：' + Client.cardJSON[evolveCardInfo][i].ability
-                            + '\n卡片張數：' + Client.userJSON[userInfo][j].userEvolveCard[i].cardAmount + ' 張')
+                            + '\n卡片張數：' + Client.userJSON[userInfo][j].userEvolveCard[i].cardAmount + ' 張\n')
                     }
                 }
             }
