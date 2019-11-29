@@ -30,8 +30,11 @@ const userInfo = "userInfo";
 const cardInfo = "cardInfo";
 const codeInfo = "codeInfo";
 const auctionInfo = "auctionInfo";
+const evolveCardInfo = "evolveCardInfo";
 const slotPlointConsume = -100;
 const checkinPoints = 200;
+const messagePoints = 2;
+const evolveNeedAmount = 3;
 
 //write user id to userinfo.json
 //display every message
@@ -42,7 +45,7 @@ Client.on('message', message => {
         inputUserID(message.author.username, message.author.id)
         userIndex = changeUserIDToIndex(message.author.id);
         Client.userJSON[userInfo][userIndex].messageAmount += 1;
-        Client.userJSON[userInfo][userIndex].points += 2;
+        Client.userJSON[userInfo][userIndex].points += messagePoints;
         writeJSON(Client.userJSON);
     }
 });
@@ -58,7 +61,7 @@ Client.on('message', message => {
 */
 
 //write all json at 4 am everyday
-let writeAllJSONCron = new cron.CronJob('00 00 04 * * *', writeAllJSON);
+let writeAllJSONCron = new cron.CronJob('00 00 20 * * *', writeAllJSON);
 writeAllJSONCron.start();
 
 
@@ -67,14 +70,16 @@ Client.on('message', message => {
     if (message.content.startsWith(`${prefix}help`)) {
         message.channel.send('命令列表\n$checkin：每日登入領取 200 點' +
             '\n$info：查看個人資訊\n$card：查看卡片資訊\n$slot：花費 100 點數抽獎\n$rank：查看積分排行榜'
-            + '\n$exchange 100：兌換 100 點數為 10 積分\n$code xxx：輸入序號兌換積分\n$sell hello：販賣已擁有卡片 hello'
-            + '\n$bid hello 100：參加拍賣會，對 hello 出價 100 點數，時限內價高者得\n貢獻訊息獲得點數，請多多活絡氣氛！');
+            + '\n$exchange 100：兌換 100 點數為 10 積分\n$code xxx：輸入序號兌換積分\n$sell cardName：販賣已擁有卡片 hello'
+            + '\n$bid cardName 100：參加拍賣會，對 cardName 出價 100 點數，時限內價高者得該卡片' +
+            '\n$evolve cardName：消耗 ' + evolveNeedAmount + ' 張 cardName 取得進化卡片\n貢獻訊息獲得點數，請多多活絡氣氛！'
+        );
     }
 })
 
 //$checkin
 //checkin reset at 9 am everyday
-let checkinResetCron = new cron.CronJob('00 00 09 * * *', checkinReset);
+let checkinResetCron = new cron.CronJob('00 00 01 * * *', checkinReset);
 checkinResetCron.start();
 
 Client.on('message', message => {
@@ -118,25 +123,45 @@ Client.on('message', message => {
 
         var cardInfoArray = [];
         var noCardInfoArray = [];
+        var evolveCardInfoArray = [];
 
-        for (var index = 0; index < Client.userJSON[userInfo].length; index++) {
-            if (message.author.id == Client.userJSON[userInfo][index].userID) {
-                for (var i = 0; i < Client.userJSON[userInfo][index].userCard.length; i++) {
-                    if (Client.userJSON[userInfo][index].userCard[i].cardStatus == "on") {
-                        cardInfoArray.push('【' + Client.cardJSON[cardInfo][i].name + '】\n卡片效果：' + Client.cardJSON[cardInfo][i].ability + '\n');
-                        console.log(cardInfoArray);
-                    } else if (Client.userJSON[userInfo][index].userCard[i].cardStatus == "off") {
+        for (var j = 0; j < Client.userJSON[userInfo].length; j++) {
+            if (message.author.id == Client.userJSON[userInfo][j].userID) {
+                for (var i = 0; i < Client.userJSON[userInfo][j].userCard.length; i++) {
+                    if (Client.userJSON[userInfo][j].userCard[i].cardStatus == "on") {
+                        cardInfoArray.push('【' + Client.cardJSON[cardInfo][i].name + '】\n卡片效果：' + Client.cardJSON[cardInfo][i].ability
+                            + '\n卡片張數：' + Client.userJSON[userInfo][j].userCard[i].cardAmount + ' 張\n');
+                        //console.log(cardInfoArray);
+                    } else if (Client.userJSON[userInfo][j].userCard[i].cardStatus == "off") {
                         noCardInfoArray.push('【' + Client.cardJSON[cardInfo][i].name + '】\n卡片效果：' + Client.cardJSON[cardInfo][i].ability + '\n');
-                        console.log(noCardInfoArray);
+                        //console.log(noCardInfoArray);
+                    }
+                    //evolve card info display
+                    if (Client.userJSON[userInfo][j].userEvolveCard[i].cardStatus == "on") {
+                        evolveCardInfoArray.push('【' + Client.cardJSON[evolveCardInfo][i].name + '】\n卡片效果：' + Client.cardJSON[evolveCardInfo][i].ability
+                            + '\n卡片張數：' + Client.userJSON[userInfo][j].userEvolveCard[i].cardAmount + ' 張')
                     }
                 }
             }
         }
+        if (cardInfoArray.length == 0) {
+            cardInfoArray.push('\n暫時無卡片，請參加抽獎活動抽取！\n');
+        }
         cardInfoArray = cardInfoArray.join('');
+
+        if (noCardInfoArray.length == 0) {
+            noCardInfoArray.push('\n你已獲得所有卡片，嘗試累積卡片，獲得特殊卡片！\n');
+        }
         noCardInfoArray = noCardInfoArray.join('');
 
+        if (evolveCardInfoArray.length == 0) {
+            evolveCardInfoArray.push('\n暫時無卡片，請參加抽獎活動抽取卡片來進化！')
+        }
+        evolveCardInfoArray = evolveCardInfoArray.join('');
+
+
         message.channel.send(message.author.username + ' 的卡片資訊\n擁有卡片：\n' + cardInfoArray
-            + '\n尚未擁有卡片：\n' + noCardInfoArray);
+            + '\n尚未擁有卡片：\n' + noCardInfoArray + '\n\n＊特殊卡牌：\n' + evolveCardInfoArray);
         /*
         for (var i = 0; i < cardInfoArray.length; i++) {
             message.channel.send(cardInfoArray[i]);
@@ -263,11 +288,11 @@ Client.on('message', message => {
 
             if (canSell(message.author.id, cardIndex)) {
                 console.log('can sell ' + cardName);
-                changeSelling(cardIndex, "true", message.author.username);
+                changeSelling(message.author.id, cardIndex, "true", message.author.username);
                 message.channel.send(message.author.username + ' 正在出售卡片：' + cardName + '\n有興趣的買家請儘速出價，出價時間為 10 分鐘！！');
                 var sellTimeInterval = setTimeout(function () {
                     //highestBidPoint = getHighestPoint();
-                    changeSelling(cardIndex, "false", message.author.username);
+                    changeSelling(message.author.id, cardIndex, "false", message.author.username);
                     var bidder = Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray[Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray.length - 1];
                     var bidPoint = parseInt(Client.auctionJSON[auctionInfo][cardIndex].bidArray.priceArray[Client.auctionJSON[auctionInfo][cardIndex].bidArray.priceArray.length - 1]);
                     winningBidderGetCard(bidder, cardIndex, bidPoint);
@@ -283,7 +308,7 @@ Client.on('message', message => {
                     Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray = ["Seller"];
                     Client.auctionJSON[auctionInfo][cardIndex].bidArray.priceArray = [0];
                     console.log(Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray);
-                }, 10 * 1000);
+                }, 20 * 1000);
 
 
             } else if (!canSell(message.author.id, cardIndex)) {
@@ -353,6 +378,37 @@ Client.on('message', message => {
         }
     }
 })
+//$evolve
+Client.on('message', message => {
+    if (message.content.startsWith(`${prefix}evolve`)) {
+        var _;
+        var getBasicCard;
+        var cardIndex;
+        var cardname;
+        var userIndex;
+
+        _, getBasicCard = message.content.split(' ', 2);
+        cardname = getBasicCard[1];
+
+        cardIndex = getSellCardIndex(cardname);
+        userIndex = changeUserIDToIndex(message.author.id, userIndex);
+        console.log(cardIndex);
+
+        if (cardIndex == undefined) {
+            message.channel.send('輸入錯誤，請確認卡片名稱！');
+        } else {
+            if (Client.userJSON[userInfo][userIndex].userCard[cardIndex].cardAmount >= evolveNeedAmount) {
+                evolveBasicCardToEvolveCoard(cardIndex, userIndex);
+                message.channel.send('進化成功\n恭喜 ' + message.author.username + ' 獲得特殊卡片【' + Client.cardJSON[evolveCardInfo][cardIndex].name + "】！！");
+            } else if (Client.userJSON[userInfo][userIndex].userCard[cardIndex].cardAmount < evolveNeedAmount || Client.userJSON[userInfo].userCard[cardIndex].cardStatus == "off") {
+                message.channel.send('卡片不足，無法進化！');
+            }
+        }
+
+    }
+})
+
+
 
 /*
 ============================================================================================================================
@@ -531,18 +587,23 @@ function slot(id, slotPrize) {
     var slotPoint = GetRandomNum(1, 200);
     var slotCard = GetRandomNum(1, 10);
     var random = GetRandomNum(0, 1);
-    for (var index = 0; index < Client.userJSON[userInfo].length; index++) {
-        if (id == Client.userJSON[userInfo][index].userID) {
+    for (var i = 0; i < Client.userJSON[userInfo].length; i++) {
+        if (id == Client.userJSON[userInfo][i].userID) {
             if (random == 0) {
-                Client.userJSON[userInfo][index].points = Client.userJSON[userInfo][index].points + slotPoint + slotPlointConsume;
+                Client.userJSON[userInfo][i].points = Client.userJSON[userInfo][i].points + slotPoint + slotPlointConsume;
                 slotPrize = '恭喜獲得' + slotPoint + ' 點！';
             } else if (random == 1) {
-                slotPrize = '恭喜獲得' + slotCard + ' 號卡片！';
                 var cardIndex = slotCard - 1;
-                Client.userJSON[userInfo][index].points = Client.userJSON[userInfo][index].points + slotPlointConsume;
-                Client.userJSON[userInfo][index].userCard[cardIndex].cardStatus = "on";
+                Client.userJSON[userInfo][i].points = Client.userJSON[userInfo][i].points + slotPlointConsume;
+                if (Client.userJSON[userInfo][i].userCard[cardIndex].cardAmount == 0) {
+                    Client.userJSON[userInfo][i].userCard[cardIndex].cardStatus = "on";
+                    Client.userJSON[userInfo][i].userCard[cardIndex].cardAmount = 1;
+                } else {
+                    Client.userJSON[userInfo][i].userCard[cardIndex].cardAmount += 1;
+                }
+                slotPrize = '恭喜獲得【' + Client.cardJSON[cardInfo][cardIndex].name + '】';
             }
-            console.log(Client.userJSON[userInfo][index].userCard)
+            console.log(Client.userJSON[userInfo][i].userCard)
             writeJSON(Client.userJSON);
         }
     }
@@ -553,27 +614,28 @@ function slot(id, slotPrize) {
 function getErcFromPrivateKey(id, code, result) {
 
     var getErc;
-    for (var i = 0; i < Client.codeJSON[codeInfo].length; i++) {
-        if (code == Client.codeJSON[codeInfo][i].privateKey) {
-            if (Client.codeJSON[codeInfo][i].status == "on") {
-                getErc = Client.codeJSON[codeInfo][i].erc;
-                Client.codeJSON[codeInfo][i].status = "off";
-                writeJSON(Client.codeJSON);
-                for (var j = 0; j < Client.userJSON[userInfo].length; j++) {
-                    if (id == Client.userJSON[userInfo][j].userID) {
-                        Client.userJSON[userInfo][j].erc += getErc
-                        writeJSON(Client.userJSON);
+    if (code == undefined) {
+        result = "序號輸入錯誤，請重新輸入";
+    } else {
+        for (var i = 0; i < Client.codeJSON[codeInfo].length; i++) {
+            if (code == Client.codeJSON[codeInfo][i].privateKey) {
+                if (Client.codeJSON[codeInfo][i].status == "on") {
+                    getErc = Client.codeJSON[codeInfo][i].erc;
+                    Client.codeJSON[codeInfo][i].status = "off";
+                    writeJSON(Client.codeJSON);
+                    for (var j = 0; j < Client.userJSON[userInfo].length; j++) {
+                        if (id == Client.userJSON[userInfo][j].userID) {
+                            Client.userJSON[userInfo][j].erc += getErc
+                            writeJSON(Client.userJSON);
+                        }
                     }
-                }
-                result = "積分兌換成功！！\n恭喜獲得 " + getErc + " 積分";
+                    result = "積分兌換成功！！\n恭喜獲得 " + getErc + " 積分";
 
-            } else if (Client.codeJSON[codeInfo][i].status == "off") {
-                result = "序號已經被兌換！！\n若有問題，請聯繫客服！";
+                } else if (Client.codeJSON[codeInfo][i].status == "off") {
+                    result = "序號已經被兌換！！\n若有問題，請聯繫客服！";
+                }
             }
         }
-    }
-    if (result == undefined) {
-        result = "序號輸入錯誤，請重新輸入";
     }
     return result;
 }
@@ -606,25 +668,25 @@ function canSell(id, cardIndex) {
         }
     }
 }
-function changeSelling(cardIndex, status, sellCardUsername) {
+function changeSelling(id, cardIndex, status, sellCardUsername) {
 
     Client.auctionJSON[auctionInfo][cardIndex].inAuction = status;
-    console.log(Client.auctionJSON[auctionInfo][cardIndex].inAuction);
     Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray[0] = sellCardUsername;
+
     console.log(Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray);
 
     writeJSON(Client.auctionJSON);
 }
 
-function winningBidderGetCard(username, cardIndex, bidPoint) {
+function winningBidderGetCard(bidder, cardIndex, bidPoint) {
     for (var i = 0; i < Client.userJSON[userInfo].length; i++) {
-        if (Client.userJSON[userInfo][i].username == username) {
+        if (Client.userJSON[userInfo][i].username == bidder) {
+            Client.userJSON[userInfo][i].userCard[cardIndex].cardAmount += 1;
             Client.userJSON[userInfo][i].userCard[cardIndex].cardStatus = "on";
             Client.userJSON[userInfo][i].points -= bidPoint;
         }
     }
     writeJSON(Client.userJSON);
-
 }
 
 function canBid(cardIndex) {
@@ -647,6 +709,19 @@ function bidToAuctionJSON(bidUsername, bidPrice, bidPriceArray, bidUsernameArray
     console.log(bidUsernameArray);
 
     writeJSON(Client.auctionJSON);
+
+}
+
+function evolveBasicCardToEvolveCoard(cardIndex, userIndex) {
+    Client.userJSON[userInfo][userIndex].userCard[cardIndex].cardAmount -= evolveNeedAmount;
+    console.log(Client.userJSON[userInfo][userIndex].userCard[cardIndex].cardAmount);
+    if (Client.userJSON[userInfo][userIndex].userCard[cardIndex].cardAmount == 0) {
+        Client.userJSON[userInfo][userIndex].userCard[cardIndex].cardStatus == "off";
+    }
+    Client.userJSON[userInfo][userIndex].userEvolveCard[cardIndex].cardAmount += 1;
+    Client.userJSON[userInfo][userIndex].userEvolveCard[cardIndex].cardStatus = "on";
+
+    writeJSON(Client.userJSON);
 
 }
 

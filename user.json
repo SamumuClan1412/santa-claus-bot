@@ -3,48 +3,110 @@
         {
             "userID": 519777074198609900,
             "username": "Roger",
-            "points": 505,
+            "points": 1005,
             "erc": 101,
             "messageAmount": 1,
             "userCard": [
                 {
                     "cardStatus": "on",
+                    "cardAmount": 6,
                     "selling": "false"
                 },
                 {
                     "cardStatus": "off",
+                    "cardAmount": 0,
                     "selling": "false"
                 },
                 {
                     "cardStatus": "off",
+                    "cardAmount": 0,
                     "selling": "false"
                 },
                 {
                     "cardStatus": "off",
+                    "cardAmount": 0,
                     "selling": "false"
                 },
                 {
                     "cardStatus": "off",
+                    "cardAmount": 0,
                     "selling": "false"
                 },
                 {
                     "cardStatus": "off",
+                    "cardAmount": 0,
                     "selling": "false"
                 },
                 {
                     "cardStatus": "off",
+                    "cardAmount": 0,
                     "selling": "false"
                 },
                 {
                     "cardStatus": "off",
+                    "cardAmount": 0,
                     "selling": "false"
                 },
                 {
                     "cardStatus": "off",
+                    "cardAmount": 0,
                     "selling": "false"
                 },
                 {
                     "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                }
+            ],
+            "userEvolveCard": [
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
                     "selling": "false"
                 }
             ],
@@ -53,7 +115,7 @@
         {
             "userID": 0,
             "username": "evelion41",
-            "points": 0,
+            "points": 1000,
             "erc": 15,
             "messageAmount": 0,
             "userCard": [
@@ -95,6 +157,58 @@
                 },
                 {
                     "cardStatus": "off",
+                    "selling": "false"
+                }
+            ],
+            "userEvolveCard": [
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
                     "selling": "false"
                 }
             ],
@@ -148,53 +262,55 @@
                     "selling": "false"
                 }
             ],
-            "checkin": "off"
-        },
-        {
-            "userID": 0,
-            "username": "test",
-            "points": 0,
-            "erc": 0,
-            "messageAmount": 0,
-            "userCard": [
+            "userEvolveCard": [
                 {
                     "cardStatus": "off",
+                    "cardAmount": 0,
                     "selling": "false"
                 },
                 {
                     "cardStatus": "off",
+                    "cardAmount": 0,
                     "selling": "false"
                 },
                 {
                     "cardStatus": "off",
+                    "cardAmount": 0,
                     "selling": "false"
                 },
                 {
                     "cardStatus": "off",
+                    "cardAmount": 0,
                     "selling": "false"
                 },
                 {
                     "cardStatus": "off",
+                    "cardAmount": 0,
                     "selling": "false"
                 },
                 {
                     "cardStatus": "off",
+                    "cardAmount": 0,
                     "selling": "false"
                 },
                 {
                     "cardStatus": "off",
+                    "cardAmount": 0,
                     "selling": "false"
                 },
                 {
                     "cardStatus": "off",
+                    "cardAmount": 0,
                     "selling": "false"
                 },
                 {
                     "cardStatus": "off",
+                    "cardAmount": 0,
                     "selling": "false"
                 },
                 {
                     "cardStatus": "off",
+                    "cardAmount": 0,
                     "selling": "false"
                 }
             ],
@@ -248,53 +364,55 @@
                     "selling": "false"
                 }
             ],
-            "checkin": "off"
-        },
-        {
-            "userID": 0,
-            "username": "test",
-            "points": 0,
-            "erc": 0,
-            "messageAmount": 0,
-            "userCard": [
+            "userEvolveCard": [
                 {
                     "cardStatus": "off",
+                    "cardAmount": 0,
                     "selling": "false"
                 },
                 {
                     "cardStatus": "off",
+                    "cardAmount": 0,
                     "selling": "false"
                 },
                 {
                     "cardStatus": "off",
+                    "cardAmount": 0,
                     "selling": "false"
                 },
                 {
                     "cardStatus": "off",
+                    "cardAmount": 0,
                     "selling": "false"
                 },
                 {
                     "cardStatus": "off",
+                    "cardAmount": 0,
                     "selling": "false"
                 },
                 {
                     "cardStatus": "off",
+                    "cardAmount": 0,
                     "selling": "false"
                 },
                 {
                     "cardStatus": "off",
+                    "cardAmount": 0,
                     "selling": "false"
                 },
                 {
                     "cardStatus": "off",
+                    "cardAmount": 0,
                     "selling": "false"
                 },
                 {
                     "cardStatus": "off",
+                    "cardAmount": 0,
                     "selling": "false"
                 },
                 {
                     "cardStatus": "off",
+                    "cardAmount": 0,
                     "selling": "false"
                 }
             ],
@@ -348,6 +466,58 @@
                     "selling": "false"
                 }
             ],
+            "userEvolveCard": [
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                }
+            ],
             "checkin": "off"
         },
         {
@@ -395,6 +565,262 @@
                 },
                 {
                     "cardStatus": "off",
+                    "selling": "false"
+                }
+            ],
+            "userEvolveCard": [
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                }
+            ],
+            "checkin": "off"
+        },
+        {
+            "userID": 0,
+            "username": "test",
+            "points": 0,
+            "erc": 0,
+            "messageAmount": 0,
+            "userCard": [
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                }
+            ],
+            "userEvolveCard": [
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                }
+            ],
+            "checkin": "off"
+        },
+        {
+            "userID": 0,
+            "username": "test",
+            "points": 0,
+            "erc": 0,
+            "messageAmount": 0,
+            "userCard": [
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "selling": "false"
+                }
+            ],
+            "userEvolveCard": [
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
+                    "selling": "false"
+                },
+                {
+                    "cardStatus": "off",
+                    "cardAmount": 0,
                     "selling": "false"
                 }
             ],

@@ -42,13 +42,55 @@
         },
         {
             "id": 9,
-            "name": "卡比獸",
+            "name": "小卡比獸",
             "ability": "泰山壓頂"
         },
         {
             "id": 10,
             "name": "伊布",
             "ability": "角撞"
+        }
+    ],
+    "evolveCardInfo": [
+        {
+            "name": "妙蛙花",
+            "ability": "飛葉快刀"
+        },
+        {
+            "name": "噴火龍",
+            "ability": "噴射火焰"
+        },
+        {
+            "name": "卡咪龜",
+            "ability": "泡沫光線"
+        },
+        {
+            "name": "雷丘",
+            "ability": "百萬伏特"
+        },
+        {
+            "name": "比比鳥",
+            "ability": "飛行"
+        },
+        {
+            "name": "貓老大",
+            "ability": "發點數"
+        },
+        {
+            "name": "豪力",
+            "ability": "揍你一拳"
+        },
+        {
+            "name": "大岩石",
+            "ability": "吃土囉"
+        },
+        {
+            "name": "卡比獸",
+            "ability": "睡覺囉"
+        },
+        {
+            "name": "聖誕伊布",
+            "ability": "送你積分囉"
         }
     ]
 }
