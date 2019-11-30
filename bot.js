@@ -26,6 +26,9 @@ Client.once('ready', () => {
 //============================================================================================================================
 //bot command
 var index;
+var getCommandContent;
+var _;
+var commandContent;
 const userInfo = "userInfo";
 const cardInfo = "cardInfo";
 const codeInfo = "codeInfo";
@@ -61,30 +64,36 @@ Client.on('message', message => {
 */
 
 //write all json at 4 am everyday
-let writeAllJSONCron = new cron.CronJob('00 00 20 * * *', writeAllJSON);
+let writeAllJSONCron = new cron.CronJob('00 00 04 * * *', writeAllJSON);
 writeAllJSONCron.start();
 
 
 //$help
 Client.on('message', message => {
-    if (message.content == `${prefix}help`) {
+    _, getCommandContent = message.content.split(' ', 2);
+    commandContent = (getCommandContent[0]).toLowerCase();
+    //console.log(commandContent);
+    if (commandContent == `${prefix}help` && getCommandContent[1] == undefined) {
         message.channel.send('命令列表\n$checkin：每日登入領取 200 點' +
             '\n$info：查看個人資訊\n$card：查看卡片資訊\n$slot：花費 100 點數抽獎\n$rank：查看積分排行榜'
             + '\n$exchange 100：兌換 100 點數為 10 積分\n$code xxx：輸入序號兌換積分\n$sell cardName：販賣已擁有卡片 hello'
             + '\n$bid cardName 100：參加拍賣會，對 cardName 出價 100 點數，時限內價高者得該卡片' +
             '\n$evolve cardName：消耗 ' + evolveNeedAmount + ' 張 cardName 取得進化卡片\n貢獻訊息獲得點數，請多多活絡氣氛！'
         );
+    } else if (message.content.startsWith(`${prefix}help`)) {
+        message.channel.send('輸入錯誤，輸入 $help 即可！')
     }
 })
 
 //$checkin
 //checkin reset at 9 am everyday
-let checkinResetCron = new cron.CronJob('00 00 01 * * *', checkinReset);
+let checkinResetCron = new cron.CronJob('00 00 09 * * *', checkinReset);
 checkinResetCron.start();
 
 Client.on('message', message => {
-    if (message.content == `${prefix}checkin`) {
-
+    _, getCommandContent = message.content.split(' ', 2);
+    commandContent = (getCommandContent[0]).toLowerCase();
+    if (commandContent == `${prefix}checkin` && getCommandContent[1] == undefined) {
         for (var i = 0; i < Client.userJSON[userInfo].length; i++) {
             if (message.author.id == Client.userJSON[userInfo][i].userID) {
                 if (Client.userJSON[userInfo][i].checkin == "off") {
@@ -100,26 +109,35 @@ Client.on('message', message => {
                 }
             }
         }
+    } else if (message.content.startsWith(`${prefix}checkin`)) {
+        message.channel.send('格式錯誤，輸入 $help 查看正確用法！')
     }
 });
 
 
 //$info
 Client.on('message', message => {
-    if (message.content == `${prefix}info`) {
+    _, getCommandContent = message.content.split(' ', 2);
+    commandContent = (getCommandContent[0]).toLowerCase();
+    if (commandContent == `${prefix}info` && getCommandContent[1] == undefined) {
 
         index = changeUserIDToIndex(message.author.id, index);
 
         message.channel.send(message.author.username + ' 資訊\nID：'
             + message.author.id + '\n點數：'
             + Client.userJSON[userInfo][index].points + ' 點\n積分：'
-            + Client.userJSON[userInfo][index].erc + ' 分\n');
+            + Client.userJSON[userInfo][index].erc.toFixed(1) + ' 分\n');
 
+    } else if (message.content.startsWith(`${prefix}info`)) {
+        message.channel.send('格式錯誤，輸入 $help 查看正確用法！')
     }
 })
 //>card
 Client.on('message', message => {
-    if (message.content == `${prefix}card`) {
+    _, getCommandContent = message.content.split(' ', 2);
+    commandContent = (getCommandContent[0]).toLowerCase();
+
+    if (commandContent == `${prefix}card` && getCommandContent[1] == undefined) {
 
         var cardInfoArray = [];
         var noCardInfoArray = [];
@@ -172,11 +190,15 @@ Client.on('message', message => {
             message.channel.send(noCardInfoArray[i]);
         }
         */
+    } else if (message.content.startsWith(`${prefix}rank`)) {
+        message.channel.send('格式錯誤，輸入 $help 查看正確用法！')
     }
 })
 //>slot
 Client.on('message', message => {
-    if (message.content == `${prefix}slot`) {
+    _, getCommandContent = message.content.split(' ', 2);
+    commandContent = (getCommandContent[0]).toLowerCase();
+    if (commandContent == `${prefix}slot` && getCommandContent[1] == undefined) {
         var slotPrize;
         message.channel.send(message.author.username + ' 開始抽獎');
         console.log(Client.userJSON[userInfo][0].userCard[6].cardAmount)
@@ -193,12 +215,15 @@ Client.on('message', message => {
                 }
             }
         }
+    } else if (message.content.startsWith(`${prefix}slot`)) {
+        message.channel.send('格式錯誤，輸入 $help 查看正確用法！')
     }
 })
 //>rank
 Client.on('message', message => {
-    if (message.content == `${prefix}rank`) {
-
+    _, getCommandContent = message.content.split(' ', 2);
+    commandContent = (getCommandContent[0]).toLowerCase();
+    if (commandContent == `${prefix}rank` && getCommandContent[1] == undefined) {
         var rankArray = [];
         var rankDisplay = [];
         message.channel.send('積分排行榜')
@@ -225,11 +250,15 @@ Client.on('message', message => {
             ' 分\n第二名：' + rankArray[1][rankArray[1].length - 2] +
             ' 共 ' + rankArray[0][rankArray[0].length - 2] + ' 分');
         */
+    } else if (message.content.startsWith(`${prefix}rank`)) {
+        message.channel.send('格式錯誤，輸入 $help 查看正確用法！')
     }
 })
 //>exchange
 Client.on('message', message => {
-    if (message.content.startsWith(`${prefix}exchange`)) {
+    _, getCommandContent = message.content.split(' ', 2);
+    commandContent = (getCommandContent[0]).toLowerCase();
+    if (commandContent == `${prefix}exchange`) {
         var _;
         var point;
         _, point = message.content.split(' ', 2)
@@ -255,12 +284,16 @@ Client.on('message', message => {
             }
         }
 
+    } else if (message.content.startsWith(`${prefix}exchange`)) {
+        message.channel.send('格式錯誤，輸入 $help 查看正確用法！')
     }
 })
 
 //>code
 Client.on('message', message => {
-    if (message.content.startsWith(`${prefix}code`)) {
+    _, getCommandContent = message.content.split(' ', 2);
+    commandContent = (getCommandContent[0]).toLowerCase();
+    if (commandContent == `${prefix}code`) {
         var _;
         var getErcCode;
         var code;
@@ -271,69 +304,79 @@ Client.on('message', message => {
         //console.log(_);
         //console.log(getErcCode[0]);
 
-        if (getErcCode[0] != `${prefix}code`) {
-            message.channel.send('格式錯誤，請輸入 $help 以確認用法！')
-        } else {
-            codeResult = getErcFromPrivateKey(message.author.id, code, codeResult);
-            message.channel.send(codeResult);
-        }
+        codeResult = getErcFromPrivateKey(message.author.id, code, codeResult);
+        message.channel.send(codeResult);
+
+    } else if (message.content.startsWith(`${prefix}code`)) {
+        message.channel.send('格式錯誤，輸入 $help 查看正確用法！')
     }
 })
 
 //>sell
 Client.on('message', message => {
-    if (message.content.startsWith(`${prefix}sell`)) {
+    _, getCommandContent = message.content.split(' ', 2);
+    commandContent = (getCommandContent[0]).toLowerCase();
+
+    if (commandContent == `${prefix}sell`) {
         var _;
         var getSellCard;
         var cardName;
         var cardIndex;
+        var isSelling;
 
         _, getSellCard = message.content.split(' ', 2);
         cardName = getSellCard[1];
         cardIndex = getSellCardIndex(cardName)
         //console.log(cardIndex);
-        if (getSellCard[0] != `${prefix}sell`) {
-            message.channel.send('格式輸入錯誤，請輸入 $help 確認')
-        } else if (cardIndex == undefined) {
+        isSelling = checkIsSellingOrNot(isSelling);
+        if (cardIndex == undefined) {
             message.channel.send('卡片名稱輸入錯誤，請輸入 $card 確認');
         } else {
+            if (!isSelling) {
+                if (checkUserHaveCardOrNot(message.author.id, cardIndex)) {
+                    //console.log('can sell ' + cardName);
+                    changeSelling(message.author.id, cardIndex, "true", message.author.username);
+                    message.channel.send(message.author.username + ' 正在出售卡片：' + cardName + '\n有興趣的買家請儘速出價，出價時間為 10 分鐘！！');
+                    var sellTimeInterval = setTimeout(function () {
+                        //highestBidPoint = getHighestPoint();
+                        changeSelling(message.author.id, cardIndex, "false", message.author.username);
+                        var bidder = Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray[Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray.length - 1];
+                        var bidPoint = parseInt(Client.auctionJSON[auctionInfo][cardIndex].bidArray.priceArray[Client.auctionJSON[auctionInfo][cardIndex].bidArray.priceArray.length - 1]);
+                        winningBidderGetCard(bidder, cardIndex, bidPoint);
 
-            if (canSell(message.author.id, cardIndex)) {
-                console.log('can sell ' + cardName);
-                changeSelling(message.author.id, cardIndex, "true", message.author.username);
-                message.channel.send(message.author.username + ' 正在出售卡片：' + cardName + '\n有興趣的買家請儘速出價，出價時間為 10 分鐘！！');
-                var sellTimeInterval = setTimeout(function () {
-                    //highestBidPoint = getHighestPoint();
-                    changeSelling(message.author.id, cardIndex, "false", message.author.username);
-                    var bidder = Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray[Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray.length - 1];
-                    var bidPoint = parseInt(Client.auctionJSON[auctionInfo][cardIndex].bidArray.priceArray[Client.auctionJSON[auctionInfo][cardIndex].bidArray.priceArray.length - 1]);
-                    winningBidderGetCard(bidder, cardIndex, bidPoint);
-
-                    if (bidder == message.author.username) {
-                        message.channel.send(cardName + " 的拍賣會已經結束，無人競拍，卡片歸還原主");
-                    } else {
-                        message.channel.send(cardName + " 的拍賣已經結束，由 "
-                            + Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray[Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray.length - 1]
-                            + " 以 " + Client.auctionJSON[auctionInfo][cardIndex].bidArray.priceArray[Client.auctionJSON[auctionInfo][cardIndex].bidArray.priceArray.length - 1]
-                            + " 點數得標 ").catch(console.error);
-                    }
-                    Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray = ["Seller"];
-                    Client.auctionJSON[auctionInfo][cardIndex].bidArray.priceArray = [0];
-                    console.log(Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray);
-                }, 10 * 60 * 1000);
+                        if (bidder == message.author.username) {
+                            message.channel.send(cardName + " 的拍賣會已經結束，無人競拍，卡片歸還原主");
+                        } else {
+                            message.channel.send(cardName + " 的拍賣已經結束，由 "
+                                + Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray[Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray.length - 1]
+                                + " 以 " + Client.auctionJSON[auctionInfo][cardIndex].bidArray.priceArray[Client.auctionJSON[auctionInfo][cardIndex].bidArray.priceArray.length - 1]
+                                + " 點數得標 ").catch(console.error);
+                        }
+                        Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray = ["Seller"];
+                        Client.auctionJSON[auctionInfo][cardIndex].bidArray.priceArray = [0];
+                        console.log(Client.auctionJSON[auctionInfo][cardIndex].bidArray.usernameArray);
+                    }, 10 * 60 * 1000);
 
 
-            } else if (!canSell(message.author.id, cardIndex)) {
-                message.channel.send("尚未擁有該卡片，無法出售 " + cardName);
+                } else if (!checkUserHaveCardOrNot(message.author.id, cardIndex)) {
+                    message.channel.send("尚未擁有該卡片，無法出售 " + cardName);
+                }
+            } else {
+                message.channel.send("正在出售卡片，請等拍賣會結束再進行出售！")
             }
+
         }
+    } else if (message.content.startsWith(`${prefix}sell`)) {
+        message.channel.send('格式錯誤，輸入 $help 查看正確用法！')
     }
 })
 
 //>bid
 Client.on('message', message => {
-    if (message.content.startsWith(`${prefix}bid`)) {
-        var _;
+    _, getCommandContent = message.content.split(' ', 2);
+    commandContent = (getCommandContent[0]).toLowerCase();
+
+    if (commandContent == `${prefix}bid`) {
         var getBidCard;
         var cardName;
         var cardIndex;
@@ -348,9 +391,7 @@ Client.on('message', message => {
         cardIndex = getSellCardIndex(cardName)
         userIndex = changeUserIDToIndex(message.author.id);
         console.log(cardIndex);
-        if (getBidCard[0] != `${prefix}bid`) {
-            message.channel.send("格式錯誤，請輸入：$help 來查看正確用法");
-        } else if (cardIndex == undefined) {
+        if (cardIndex == undefined) {
             message.channel.send("卡片名稱輸入錯誤，請輸入：$card 來查看卡片資訊");
         } else if (getBidCard[2] == undefined || bidPrice == undefined) {
             message.channel.send("格式錯誤，請輸入：$help 來查看正確用法")
@@ -379,11 +420,16 @@ Client.on('message', message => {
                 message.channel.send("尚未有人出售該卡片，無法出價！");
             }
         }
+    } else if (message.content.startsWith(`${prefix}bid`)) {
+        message.channel.send('格式錯誤，輸入 $help 查看正確用法！')
     }
 })
 //$evolve
 Client.on('message', message => {
-    if (message.content.startsWith(`${prefix}evolve`)) {
+    _, getCommandContent = message.content.split(' ', 2);
+    commandContent = (getCommandContent[0]).toLowerCase();
+
+    if (commandContent == `${prefix}evolve`) {
         var _;
         var getBasicCard;
         var cardIndex;
@@ -395,11 +441,9 @@ Client.on('message', message => {
 
         cardIndex = getSellCardIndex(cardname);
         userIndex = changeUserIDToIndex(message.author.id, userIndex);
-        console.log(cardIndex);
+        //console.log(cardIndex);
 
-        if (getBasicCard[0] != `${prefix}evolve`) {
-            message.channel.send('格式輸入錯誤，請輸入 $help 確認正確用法')
-        } else if (cardIndex == undefined) {
+        if (cardIndex == undefined) {
             message.channel.send('卡片輸入錯誤，請輸入 $card 確認卡片名稱！');
         } else {
             if (Client.userJSON[userInfo][userIndex].userCard[cardIndex].cardAmount >= evolveNeedAmount) {
@@ -410,6 +454,8 @@ Client.on('message', message => {
             }
         }
 
+    } else if (message.content.startsWith(`${prefix}evolve`)) {
+        message.channel.send('格式錯誤，輸入 $help 查看正確用法！')
     }
 })
 
@@ -664,7 +710,7 @@ function getSellCardIndex(cardName) {
         }
     }
 }
-function canSell(id, cardIndex) {
+function checkUserHaveCardOrNot(id, cardIndex) {
     for (var i = 0; i < Client.userJSON[userInfo].length; i++) {
         if (id == Client.userJSON[userInfo][i].userID) {
             if (Client.userJSON[userInfo][i].userCard[cardIndex].cardStatus == "on" &&
@@ -676,6 +722,18 @@ function canSell(id, cardIndex) {
         }
     }
 }
+function checkIsSellingOrNot(isSelling) {
+    for (var i = 0; i < Client.auctionJSON[auctionInfo].length; i++) {
+        if (Client.auctionJSON[auctionInfo][i].bidArray.usernameArray[0] != "Seller") {
+            isSelling = true;
+            break;
+        } else {
+            isSelling = false;
+        }
+    }
+    return isSelling;
+}
+
 function changeSelling(id, cardIndex, status, sellCardUsername) {
 
     Client.auctionJSON[auctionInfo][cardIndex].inAuction = status;
@@ -778,7 +836,7 @@ function writeAuctionJSON() {
         var auction = auctionJSON.toString();
         auction = JSON.parse(auction);
 
-        for (var i = 0; i < auctionJSON.auctionInfo.length; i++) {
+        for (var i = 0; i < auction.auctionInfo.length; i++) {
             auction.auctionInfo[i].id = Client.auctionJSON[auctionInfo][i].id;
             auction.auctionInfo[i].name = Client.auctionJSON[auctionInfo][i].name;
             auction.auctionInfo[i].inAuction = Client.auctionJSON[auctionInfo][i].inAuction;

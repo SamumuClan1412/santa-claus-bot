@@ -3,9 +3,9 @@
         {
             "userID": 519777074198609900,
             "username": "Roger",
-            "points": 1007,
+            "points": 1009,
             "erc": 101,
-            "messageAmount": 2,
+            "messageAmount": 3,
             "userCard": [
                 {
                     "cardStatus": "on",
@@ -115,9 +115,9 @@
         {
             "userID": 650231541368094700,
             "username": "TestUser",
-            "points": 1022,
-            "erc": 515,
-            "messageAmount": 11,
+            "points": 926,
+            "erc": 15,
+            "messageAmount": 4,
             "userCard": [
                 {
                     "cardStatus": "off",
@@ -125,8 +125,8 @@
                     "selling": "false"
                 },
                 {
-                    "cardStatus": "off",
-                    "cardAmount": 0,
+                    "cardStatus": "on",
+                    "cardAmount": 1,
                     "selling": "false"
                 },
                 {
