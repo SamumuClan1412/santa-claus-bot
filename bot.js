@@ -41,7 +41,7 @@ const evolveNeedAmount = 3;
 Client.on('message', message => {
     var userIndex;
     console.log(message.content);
-    if (message.author.username != "Santa Claus" || message.author.username != "MEE6") {
+    if (message.author.username != "Santa Claus" && message.author.username != "MEE6") {
         inputUserID(message.author.username, message.author.id)
         userIndex = changeUserIDToIndex(message.author.id);
         Client.userJSON[userInfo][userIndex].messageAmount += 1;
@@ -404,9 +404,9 @@ Client.on('message', message => {
         } else {
             if (Client.userJSON[userInfo][userIndex].userCard[cardIndex].cardAmount >= evolveNeedAmount) {
                 evolveBasicCardToEvolveCoard(cardIndex, userIndex);
-                message.channel.send(cardName + '成功進化\n恭喜 ' + message.author.username + ' 獲得特殊卡片【' + Client.cardJSON[evolveCardInfo][cardIndex].name + "】！！");
+                message.channel.send(cardname + '成功進化\n恭喜 ' + message.author.username + ' 獲得特殊卡片【' + Client.cardJSON[evolveCardInfo][cardIndex].name + "】！！");
             } else if (Client.userJSON[userInfo][userIndex].userCard[cardIndex].cardAmount < evolveNeedAmount || Client.userJSON[userInfo].userCard[cardIndex].cardStatus == "off") {
-                message.channel.send(cardName + '數量不足，無法進化！');
+                message.channel.send(cardname + '數量不足，無法進化！');
             }
         }
 
@@ -635,9 +635,10 @@ function getErcFromPrivateKey(id, code, result) {
                         }
                     }
                     result = "積分兌換成功！！\n恭喜獲得 " + getErc + " 積分";
-
+                    break;
                 } else if (Client.codeJSON[codeInfo][i].status == "off") {
                     result = "序號已經被兌換！！\n若有問題，請聯繫客服！";
+                    break;
                 }
             } else {
                 result = "序號輸入錯誤，請確序號再重新輸入！"
