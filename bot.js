@@ -63,7 +63,7 @@ Client.on('message', message => {
 })
 */
 
-//write all json at 4 am everyday
+//write all json every 1 min
 let writeAllJSONCron = new cron.CronJob('00 01 * * * *', writeAllJSON);
 writeAllJSONCron.start();
 
