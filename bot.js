@@ -64,8 +64,16 @@ Client.on('message', message => {
 */
 
 //write all json at 4 am everyday
-let writeAllJSONCron = new cron.CronJob('00 00 04 * * *', writeAllJSON);
+let writeAllJSONCron = new cron.CronJob('00 01 * * * *', writeAllJSON);
 writeAllJSONCron.start();
+
+/*
+Client.on('message', message => {
+    if (message.content == `${prefix}test`) {
+        writeAllJSON();
+    }
+})
+*/
 
 
 //$help
